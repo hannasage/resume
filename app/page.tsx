@@ -225,7 +225,7 @@ export default function Home() {
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <p className="mb-2">📍 Baltimore, Maryland</p>
-            <p>5+ years building scalable systems and leading teams. Currently expanding AI/ML expertise.</p>
+            <p><b>5+ years</b> building scalable systems and leading teams. Currently expanding <b>AI/ML expertise.</b></p>
           </motion.div>
           <motion.div 
             className="flex flex-col sm:flex-row gap-4 justify-center"
