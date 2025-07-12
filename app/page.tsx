@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, X, ChevronDown, Mail, Linkedin, MapPin, Send } from 'lucide-react';
+import { Github } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -66,7 +67,11 @@ export default function Home() {
   };
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
+    let targetId = sectionId;
+    if (sectionId === 'contact') {
+      targetId = 'contact-info';
+    }
+    const element = document.getElementById(targetId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
@@ -106,6 +111,28 @@ export default function Home() {
                   {section}
                 </button>
               ))}
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex items-center space-x-2 ml-4">
+              <a
+                href="https://github.com/hannasage"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                aria-label="GitHub"
+              >
+                <Github className="h-5 w-5 text-gray-700" />
+              </a>
+              <a
+                href="https://linkedin.com/in/hannasage"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="h-5 w-5 text-gray-700" />
+              </a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -395,7 +422,7 @@ export default function Home() {
 
       {/* Experience Section */}
       <section id="experience" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -500,122 +527,15 @@ export default function Home() {
       {/* Contact Section */}
       <section id="contact" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-black mb-4">Get In Touch</h2>
-            <p className="text-xl text-gray-600">Available for new opportunities and collaborations</p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-3 gap-12">
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <motion.form
-                onSubmit={handleSubmit(onSubmit)}
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Name *
-                    </label>
-                    <input
-                      {...register('name')}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
-                      placeholder="Your name"
-                    />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-                    )}
-                  </div>
-                  
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email *
-                    </label>
-                    <input
-                      {...register('email')}
-                      type="email"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
-                      placeholder="your.email@example.com"
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-                    )}
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Subject *
-                  </label>
-                  <select
-                    {...register('subject')}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
-                  >
-                    <option value="">Select a subject</option>
-                    <option value="General Inquiry">General Inquiry</option>
-                    <option value="Job Opportunity">Job Opportunity</option>
-                    <option value="Collaboration">Collaboration</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  {errors.subject && (
-                    <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>
-                  )}
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Message *
-                  </label>
-                  <textarea
-                    {...register('message')}
-                    rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent"
-                    placeholder="Tell me about your project or opportunity..."
-                  />
-                  {errors.message && (
-                    <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>
-                  )}
-                </div>
-                
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full md:w-auto px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                      <span>Sending...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4" />
-                      <span>Send Message</span>
-                    </>
-                  )}
-                </button>
-              </motion.form>
-            </div>
-            
-            {/* Contact Info */}
+          <div className="flex justify-center">
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="space-y-8"
+              className="space-y-8 w-full max-w-md"
             >
-              <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="bg-gray-50 p-6 rounded-lg" id="contact-info">
                 <h3 className="text-xl font-bold text-black mb-6">Contact Information</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
@@ -627,7 +547,6 @@ export default function Home() {
                       sagemac.ext@gmail.com
                     </a>
                   </div>
-                  
                   <div className="flex items-center space-x-3">
                     <Linkedin className="h-5 w-5 text-gray-600" />
                     <a 
@@ -639,17 +558,11 @@ export default function Home() {
                       linkedin.com/in/hannasage
                     </a>
                   </div>
-                  
                   <div className="flex items-center space-x-3">
                     <MapPin className="h-5 w-5 text-gray-600" />
                     <span className="text-gray-700">Baltimore, Maryland</span>
                   </div>
                 </div>
-              </div>
-              
-              <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-                <h4 className="text-lg font-bold text-green-800 mb-2">Status</h4>
-                <p className="text-green-700">Available for new opportunities</p>
               </div>
             </motion.div>
           </div>
