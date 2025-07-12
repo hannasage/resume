@@ -6,6 +6,7 @@ import { Menu, X, ChevronDown, Mail, Linkedin, MapPin, Send } from 'lucide-react
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import NetworkVisualization from './components/NetworkVisualization';
 
 // Form validation schema
 const contactSchema = z.object({
@@ -148,6 +149,11 @@ export default function Home() {
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center relative overflow-hidden">
+        {/* Network Visualization Background */}
+        <div className="absolute inset-0 pointer-events-none opacity-30">
+          <NetworkVisualization className="w-full h-full" />
+        </div>
+
         {/* Floating geometric shapes */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="floating-shape absolute top-20 left-10 w-8 h-8 border-2 border-gray-300 opacity-20"></div>
@@ -155,7 +161,7 @@ export default function Home() {
           <div className="floating-shape absolute bottom-40 left-20 w-10 h-10 border-2 border-gray-300 opacity-20"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
@@ -212,15 +218,18 @@ export default function Home() {
             </motion.div>
             
             <motion.div
-              className="hidden lg:flex justify-center"
+              className="hidden lg:flex justify-center items-center"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              <div className="w-96 h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">👩‍💻</div>
-                  <div className="text-gray-600">Building the future with code & AI</div>
+              <div className="w-96 h-96 relative">
+                <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-lg flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">🚀</div>
+                    <h3 className="text-xl font-semibold text-gray-700">Innovation & Technology</h3>
+                    <p className="text-gray-500 mt-2">Building the future, one line at a time</p>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -228,7 +237,7 @@ export default function Home() {
         </div>
         
         <motion.div 
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
