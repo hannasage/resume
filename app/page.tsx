@@ -294,7 +294,7 @@ export default function Home() {
 
       {/* Skills Section */}
       <section id="skills" className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -306,23 +306,63 @@ export default function Home() {
             <p className="text-xl text-gray-600">Comprehensive toolkit for modern software development</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 title: "Languages & Frameworks",
-                skills: ["Python", "JavaScript/TypeScript", "Go", "Java", "Kotlin", "React", "Next.js", "Node.js", "Express.js", "SQL", "GraphQL"]
+                skills: ["Python", "JavaScript/TypeScript", "Go", "Java", "Kotlin", "React", "Next.js", "Node.js", "Express.js", "SQL", "GraphQL"],
+                colors: [
+                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
+                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" },
+                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
+                  { bg: "bg-purple-100 text-purple-800", border: "border-purple-300" },
+                  { bg: "bg-pink-100 text-pink-800", border: "border-pink-300" },
+                  { bg: "bg-sky-100 text-sky-800", border: "border-sky-300" },
+                  { bg: "bg-indigo-100 text-indigo-800", border: "border-indigo-300" },
+                  { bg: "bg-lime-100 text-lime-800", border: "border-lime-300" },
+                  { bg: "bg-orange-100 text-orange-800", border: "border-orange-300" },
+                  { bg: "bg-gray-100 text-gray-800", border: "border-gray-300" },
+                  { bg: "bg-teal-100 text-teal-800", border: "border-teal-300" }
+                ]
               },
               {
                 title: "Backend & Infrastructure",
-                skills: ["AWS (EC2, S3, Lambda, RDS, SageMaker)", "Azure", "GCP", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "CI/CD", "PostgreSQL", "Supabase"]
+                skills: ["AWS (EC2, S3, Lambda, RDS, SageMaker)", "Azure", "GCP", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "CI/CD", "PostgreSQL", "Supabase"],
+                colors: [
+                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" },
+                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
+                  { bg: "bg-red-100 text-red-800", border: "border-red-300" },
+                  { bg: "bg-sky-100 text-sky-800", border: "border-sky-300" },
+                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
+                  { bg: "bg-purple-100 text-purple-800", border: "border-purple-300" },
+                  { bg: "bg-gray-100 text-gray-800", border: "border-gray-300" },
+                  { bg: "bg-pink-100 text-pink-800", border: "border-pink-300" },
+                  { bg: "bg-indigo-100 text-indigo-800", border: "border-indigo-300" },
+                  { bg: "bg-lime-100 text-lime-800", border: "border-lime-300" }
+                ]
               },
               {
                 title: "AI & Data Tools",
-                skills: ["LangChain", "LlamaIndex", "Hugging Face Transformers", "OpenAI API", "Model Context Protocol", "Pandas", "NumPy"]
+                skills: ["LangChain", "LlamaIndex", "Hugging Face Transformers", "OpenAI API", "Model Context Protocol", "Pandas", "NumPy"],
+                colors: [
+                  { bg: "bg-purple-100 text-purple-800", border: "border-purple-300" },
+                  { bg: "bg-pink-100 text-pink-800", border: "border-pink-300" },
+                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" },
+                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
+                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
+                  { bg: "bg-orange-100 text-orange-800", border: "border-orange-300" },
+                  { bg: "bg-sky-100 text-sky-800", border: "border-sky-300" }
+                ]
               },
               {
                 title: "Leadership & Soft Skills",
-                skills: ["Team Leadership & Mentoring", "Cross-functional Communication", "Creative Problem Solving", "Agile Methodology"]
+                skills: ["Team Leadership & Mentoring", "Cross-functional Communication", "Creative Problem Solving", "Agile Methodology"],
+                colors: [
+                  { bg: "bg-gray-100 text-gray-800", border: "border-gray-300" },
+                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
+                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
+                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" }
+                ]
               }
             ].map((category, categoryIndex) => (
               <motion.div
@@ -334,19 +374,18 @@ export default function Home() {
                 className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
                 <h3 className="text-xl font-bold text-black mb-4">{category.title}</h3>
-                <div className="space-y-2">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skill}
-                      initial={{ opacity: 0, x: 10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ delay: (categoryIndex * 0.1) + (skillIndex * 0.05), duration: 0.4 }}
-                      viewport={{ once: true }}
-                      className="text-gray-700 hover:text-black transition-colors duration-200 cursor-pointer"
-                    >
-                      {skill}
-                    </motion.div>
-                  ))}
+                <div className="flex flex-wrap gap-2">
+                  {category.skills.map((skill, skillIndex) => {
+                    const color = category.colors[skillIndex % category.colors.length];
+                    return (
+                      <span
+                        key={skill}
+                        className={`inline-block px-3 py-1 rounded-full text-sm font-medium shadow-sm ${color.bg} ${color.border} max-w-[14rem] truncate overflow-hidden whitespace-nowrap`}
+                      >
+                        {skill}
+                      </span>
+                    );
+                  })}
                 </div>
               </motion.div>
             ))}
