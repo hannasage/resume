@@ -162,7 +162,7 @@ export default function Home() {
           <div className="floating-shape absolute bottom-40 left-20 w-10 h-10 border-2 border-gray-300 opacity-20"></div>
         </div>
 
-        <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-[55vw] mx-auto">
+        <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto">
           <motion.h1 
             className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black mb-4"
             initial={{ opacity: 0 }}
@@ -232,7 +232,7 @@ export default function Home() {
 
       {/* About Section */}
       <section id="about" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
