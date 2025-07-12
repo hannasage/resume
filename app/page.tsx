@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import NetworkVisualization from './components/NetworkVisualization';
+import { Typewriter } from 'react-simple-typewriter';
 
 // Form validation schema
 const contactSchema = z.object({
@@ -148,7 +149,7 @@ export default function Home() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center relative overflow-hidden">
+      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
         {/* Network Visualization Background */}
         <div className="absolute inset-0 pointer-events-none opacity-30">
           <NetworkVisualization className="w-full h-full" />
@@ -161,81 +162,64 @@ export default function Home() {
           <div className="floating-shape absolute bottom-40 left-20 w-10 h-10 border-2 border-gray-300 opacity-20"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+        <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-[55vw] mx-auto">
+          <motion.h1 
+            className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            Hanna Sage,
+            <br />
+            <span className="ml-2 text-primary">
+              <Typewriter
+                words={["Software Engineer", "AI Enthusiast", "Creative Technologist", "Full-Stack Developer", "Cloud Architect"]}
+                loop={0}
+                cursor
+                cursorStyle="|"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1500}
+              />
+            </span>
+          </motion.h1>
+          <motion.h2 
+            className="text-2xl lg:text-3xl text-gray-600 mb-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            {/* Optionally keep a subtitle here or remove */}
+          </motion.h2>
+          <motion.div 
+            className="text-lg text-gray-600 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <p className="mb-2">📍 Baltimore, Maryland</p>
+            <p>5+ years building scalable systems and leading teams. Currently expanding AI/ML expertise.</p>
+          </motion.div>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+          >
+            <button 
+              onClick={() => scrollToSection('experience')}
+              className="px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors duration-200"
             >
-              <motion.h1 
-                className="text-5xl lg:text-7xl font-bold text-black mb-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-              >
-                Software Engineer & AI Enthusiast
-              </motion.h1>
-              
-              <motion.h2 
-                className="text-2xl lg:text-3xl text-gray-600 mb-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-              >
-                Creative Technologist
-              </motion.h2>
-              
-              <motion.div 
-                className="text-lg text-gray-600 mb-8"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-              >
-                <p className="mb-2">📍 Baltimore, Maryland</p>
-                <p>5+ years building scalable systems and leading teams. Currently expanding AI/ML expertise.</p>
-              </motion.div>
-              
-              <motion.div 
-                className="flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-              >
-                <button 
-                  onClick={() => scrollToSection('experience')}
-                  className="px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors duration-200"
-                >
-                  View My Work
-                </button>
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="px-8 py-3 border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition-colors duration-200"
-                >
-                  Get In Touch
-                </button>
-              </motion.div>
-            </motion.div>
-            
-            <motion.div
-              className="hidden lg:flex justify-center items-center"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
+              View My Work
+            </button>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="px-8 py-3 border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition-colors duration-200"
             >
-              <div className="w-96 h-96 relative">
-                <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg shadow-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-6xl mb-4">🚀</div>
-                    <h3 className="text-xl font-semibold text-gray-700">Innovation & Technology</h3>
-                    <p className="text-gray-500 mt-2">Building the future, one line at a time</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+              Get In Touch
+            </button>
+          </motion.div>
         </div>
-        
         <motion.div 
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
           initial={{ opacity: 0 }}
