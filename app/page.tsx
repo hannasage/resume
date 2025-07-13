@@ -290,7 +290,7 @@ export default function Home() {
             className="grid lg:grid-cols-5 gap-12 items-center"
           >
             <div className="lg:col-span-3">
-              <h2 className="text-4xl font-bold text-black dark:text-white mb-8">About Me</h2>
+              <h2 className="text-4xl font-bold mb-8" style={{ color: 'var(--color-accent-vibrant)' }}>About Me</h2>
               <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
                 <p>
                   Creative and technically adept Software Engineer with a passion for building 
@@ -351,7 +351,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-black dark:text-white mb-4">Skills & Technologies</h2>
+            <h2 className="text-4xl font-bold mb-4" style={{ color: 'var(--color-accent-vibrant)' }}>Skills & Technologies</h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">Comprehensive toolkit for modern software development</p>
           </motion.div>
 
@@ -453,7 +453,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-black dark:text-white mb-4">Professional Experience</h2>
+            <h2 className="text-4xl font-bold mb-4" style={{ color: 'var(--color-accent-vibrant)' }}>Professional Experience</h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">Building impactful solutions across diverse domains</p>
           </motion.div>
 
@@ -559,7 +559,7 @@ export default function Home() {
               className="space-y-8 w-full max-w-md"
             >
               <div className="p-6 rounded-lg" id="contact-info" style={{ backgroundColor: 'var(--color-accent)' }}>
-                <h3 className="text-xl font-bold text-black dark:text-white mb-6">Contact Information</h3>
+                <h3 className="text-xl font-bold mb-6" style={{ color: 'var(--color-accent-vibrant)' }}>Contact Information</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-gray-600 dark:text-gray-400" />
