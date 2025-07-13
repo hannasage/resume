@@ -2,24 +2,24 @@
 
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, ChevronDown, Mail, Linkedin, MapPin, Send } from 'lucide-react';
+import { Menu, X, ChevronDown, Mail, Linkedin, MapPin } from 'lucide-react';
 import { Github } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+// import { useForm } from 'react-hook-form';
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import { z } from 'zod';
 import NetworkVisualization from './components/NetworkVisualization';
 import { Typewriter } from 'react-simple-typewriter';
 import ThemeToggle from './components/ThemeToggle';
 
 // Form validation schema
-const contactSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Please enter a valid email'),
-  subject: z.string().min(1, 'Please select a subject'),
-  message: z.string().min(10, 'Message must be at least 10 characters'),
-});
+// const contactSchema = z.object({
+//   name: z.string().min(2, 'Name must be at least 2 characters'),
+//   email: z.string().email('Please enter a valid email'),
+//   subject: z.string().min(1, 'Please select a subject'),
+//   message: z.string().min(10, 'Message must be at least 10 characters'),
+// });
 
-type ContactForm = z.infer<typeof contactSchema>;
+// type ContactForm = z.infer<typeof contactSchema>;
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,14 +27,15 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0.8]);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<ContactForm>({
-    resolver: zodResolver(contactSchema),
-  });
+  // Form functionality temporarily disabled
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors, isSubmitting },
+  //   reset,
+  // } = useForm<ContactForm>({
+  //   resolver: zodResolver(contactSchema),
+  // });
 
   // Navigation scroll handling
   useEffect(() => {
@@ -60,12 +61,12 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const onSubmit = async (data: ContactForm) => {
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    console.log('Form submitted:', data);
-    reset();
-  };
+  // const onSubmit = async (data: ContactForm) => {
+  //   // Simulate form submission
+  //   await new Promise(resolve => setTimeout(resolve, 1000));
+  //   console.log('Form submitted:', data);
+  //   reset();
+  // };
 
   const scrollToSection = (sectionId: string) => {
     let targetId = sectionId;
@@ -305,7 +306,7 @@ export default function Home() {
                 </p>
                 <p>
                   Currently focused on expanding my machine learning certifications and deepening 
-                  my expertise in AI integration, I'm passionate about leveraging technology to 
+                  my expertise in AI integration, I&apos;m passionate about leveraging technology to 
                   create meaningful impact.
                 </p>
               </div>

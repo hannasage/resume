@@ -19,8 +19,8 @@ interface NetworkNode {
 export default function NetworkVisualization({ className = '' }: NetworkVisualizationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
+  // const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   useEffect(() => {
     console.log('NetworkVisualization useEffect triggered');
@@ -30,8 +30,6 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
       return;
     }
 
-    let renderer: THREE.WebGLRenderer;
-    let camera: THREE.PerspectiveCamera;
     let animationId: number;
 
     // Scene
@@ -46,16 +44,16 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
         height: containerRef.current.clientHeight,
       };
     };
-    let { width: containerWidth, height: containerHeight } = getContainerSize();
+    const { width: containerWidth, height: containerHeight } = getContainerSize();
 
     // Camera
     const aspectRatio = containerWidth / containerHeight;
-    camera = new THREE.PerspectiveCamera(60, aspectRatio, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(60, aspectRatio, 0.1, 1000);
     camera.position.set(0, 0, 25);
     camera.lookAt(0, 0, 0);
 
     // Renderer
-    renderer = new THREE.WebGLRenderer({ 
+    const renderer = new THREE.WebGLRenderer({ 
       antialias: true, 
       alpha: true,
       powerPreference: "high-performance"
