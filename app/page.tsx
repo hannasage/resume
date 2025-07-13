@@ -197,7 +197,7 @@ export default function Home() {
         </div>
 
 
-        <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto">
+        <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto">
           <motion.h1 
             className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black dark:text-white mb-4"
             initial={{ opacity: 0 }}
@@ -476,10 +476,11 @@ export default function Home() {
                 period: "Dec 2022 - Present",
                 location: "Baltimore, MD",
                 achievements: [
-                  "Led React component design for OneMAC (Medicaid/Medicare systems)",
-                  "Contributed to Smithsonian's Searchable Museum platform",
-                  "Federal policy translation to compliant UI workflows",
-                  "CI/CD optimization and team mentoring"
+                  "Led design and implementation of scalable React components for OneMAC, enabling digital submission workflows across Medicaid/Medicare systems",
+                  "Contributed to the Smithsonian's Searchable Museum platform, enhancing scalability and accessibility of digital exhibits",
+                  "Translated federal policy into compliant, accessible UI workflows",
+                  "Optimized agile delivery cycles and drove CI/CD process improvements for better quality assurance",
+                  "Mentored junior engineers across development teams"
                 ]
               },
               {
@@ -488,32 +489,34 @@ export default function Home() {
                 period: "Aug 2021 - Dec 2022",
                 location: "Baltimore, MD",
                 achievements: [
-                  "ReportStream frontend re-architecture (React + TypeScript)",
-                  "API integrations with Kotlin and Azure Functions",
-                  "Test-driven development implementation",
-                  "New engineer onboarding leadership"
+                  "Re-architected ReportStream frontend to React and migrated codebase to TypeScript, improving reliability and scalability",
+                  "Built API integrations using Kotlin and Azure Functions to support federal public health data systems",
+                  "Implemented test-driven development with Jest and RTL",
+                  "Streamlined onboarding of new engineers",
+                  "Played a key role in agile ceremonies and collaborated with stakeholders on roadmap alignment"
                 ]
               },
               {
                 title: "Technical Business Analyst",
                 company: "Advanced Metrics",
                 period: "Sep 2020 - Jul 2021",
-                location: "Remote",
+                location: "Timonium, MD",
                 achievements: [
-                  "Healthy Pathways platform liaison",
-                  "Clinical requirements to software translation",
-                  "UAT cycles and training program development"
+                  "Served as key liaison for the Healthy Pathways platform, converting clinical goals into software requirements",
+                  "Directed UAT cycles, created training programs, and documented system functionality for stakeholders",
+                  "Improved delivery efficiency through structured agile practices and effective communication between teams"
                 ]
               },
               {
-                title: "Independent/Open Source",
-                company: "Various Projects",
+                title: "Independent Software Engineer / Open Source Contributor",
+                company: "Contract Roles & Contributions",
                 period: "Nov 2019 - Aug 2020",
                 location: "Remote",
                 achievements: [
-                  "Startup and nonprofit application development",
-                  "HospitalRun EHR platform contributions",
-                  "Global healthcare access community collaboration"
+                  "Developed lightweight applications for startups and nonprofits with a focus on accessibility and maintainability",
+                  "Contributed to HospitalRun's open-source EHR platform as a frontend engineer, enhancing core React functionality",
+                  "Delivered rapid MVPs, authored technical documentation, and managed short development cycles for multiple clients",
+                  "Collaborated in global developer communities to solve real-world challenges in healthcare access"
                 ]
               }
             ].map((job, index) => (
@@ -539,7 +542,7 @@ export default function Home() {
                     <h3 className="text-xl font-bold text-black dark:text-white">{job.title}</h3>
                     <p className="text-lg text-gray-600 dark:text-gray-300 font-medium">{job.company}</p>
                     <p className="text-gray-500 dark:text-gray-400 mb-4">{job.period} • {job.location}</p>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 text-left">
                       {job.achievements.map((achievement, achievementIndex) => (
                         <li key={achievementIndex} className="text-gray-700 dark:text-gray-300 flex items-start">
                           <span className="text-black dark:text-white mr-2">•</span>
