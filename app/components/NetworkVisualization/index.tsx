@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { useTheme } from '../../context/ThemeContext';
 
 interface NetworkVisualizationProps {
   className?: string;
@@ -20,10 +21,11 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error] = useState<string | null>(null);
+  const { effectiveTheme } = useTheme();
   // const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('NetworkVisualization useEffect triggered');
+    console.log('NetworkVisualization useEffect triggered with theme:', effectiveTheme);
     
     if (!containerRef.current) {
       console.log('Container ref not available');
@@ -148,23 +150,23 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
       
       if (primaryNodes.some(n => n.id === nodeData.id)) {
         size = 1.0;
-        color = 0x1F2937; // Dark gray
+        color = effectiveTheme === 'light' ? 0x000000 : 0xF1F5F9; // Black in light, light in dark
       } else if (secondaryNodes.some(n => n.id === nodeData.id)) {
         size = 0.7;
-        color = 0x6B7280; // Medium gray
+        color = effectiveTheme === 'light' ? 0x000000 : 0xCBD5E1; // Black in light, medium light in dark
       } else if (tertiaryNodes.some(n => n.id === nodeData.id)) {
         size = 0.5;
-        color = 0x9CA3AF; // Light gray
+        color = effectiveTheme === 'light' ? 0x000000 : 0x94A3B8; // Black in light, medium gray in dark
       } else {
         size = 0.4;
-        color = 0xD1D5DB; // Very light gray
+        color = effectiveTheme === 'light' ? 0x000000 : 0x64748B; // Black in light, dark gray in dark
       }
       
       const geometry = new THREE.SphereGeometry(size, 16, 16);
       const material = new THREE.MeshPhongMaterial({ 
         color,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.95
       });
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.copy(nodeData.position);
@@ -323,7 +325,7 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
       }
       cancelAnimationFrame(animationId);
     };
-  }, []);
+  }, [effectiveTheme]);
 
   const createConnection = (
     nodes: NetworkNode[], 
@@ -341,10 +343,13 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
         toNode.position
       ]);
       
+      // Theme-aware line color
+      const lineColor = effectiveTheme === 'light' ? 0xEA580C : 0x93C5FD; // Burnt orange in light, light blue in dark
+      
       const material = new THREE.LineBasicMaterial({ 
-        color: 0x9CA3AF,
+        color: lineColor,
         transparent: true,
-        opacity: 0.2
+        opacity: effectiveTheme === 'light' ? 0.4 : 0.3
       });
       
       const line = new THREE.Line(geometry, material);
