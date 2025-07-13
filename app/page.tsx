@@ -188,12 +188,6 @@ export default function Home() {
           <NetworkVisualization className="w-full h-full" />
         </div>
 
-        {/* Floating geometric shapes */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="floating-shape absolute top-20 left-10 w-8 h-8 border-2 border-gray-300 opacity-20"></div>
-          <div className="floating-shape absolute top-40 right-20 w-6 h-6 border-2 border-gray-300 opacity-20"></div>
-          <div className="floating-shape absolute bottom-40 left-20 w-10 h-10 border-2 border-gray-300 opacity-20"></div>
-        </div>
 
         <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto">
           <motion.h1 
