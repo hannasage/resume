@@ -1,15 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Menu, X, ChevronDown, Mail, Linkedin, MapPin } from 'lucide-react';
-import { Github } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronDown, Mail, Linkedin, MapPin } from 'lucide-react';
 // import { useForm } from 'react-hook-form';
 // import { zodResolver } from '@hookform/resolvers/zod';
 // import { z } from 'zod';
 import NetworkVisualization from './components/NetworkVisualization';
+import Navigation from './components/Navigation';
 import { Typewriter } from 'react-simple-typewriter';
-import ThemeToggle from './components/ThemeToggle';
 
 // Form validation schema
 // const contactSchema = z.object({
@@ -22,10 +21,7 @@ import ThemeToggle from './components/ThemeToggle';
 // type ContactForm = z.infer<typeof contactSchema>;
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0.8]);
 
   // Form functionality temporarily disabled
   // const {
@@ -77,117 +73,12 @@ export default function Home() {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsMenuOpen(false);
   };
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)' }}>
       {/* Navigation */}
-      <motion.nav 
-        className="fixed top-0 w-full z-50 transition-all duration-300"
-        style={{ opacity }}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <motion.div 
-              className="text-2xl font-bold text-black dark:text-white"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              Hanna Sage
-            </motion.div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-8">
-              {['home', 'about', 'skills', 'experience', 'contact'].map((section) => (
-                <button
-                  key={section}
-                  onClick={() => scrollToSection(section)}
-                  className={`capitalize transition-colors duration-200 ${
-                    activeSection === section 
-                      ? 'border-b-2' 
-                      : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
-                  }`}
-                  style={{
-                    color: activeSection === section ? 'var(--color-accent-vibrant)' : undefined,
-                    borderBottomColor: activeSection === section ? 'var(--color-accent-vibrant)' : undefined
-                  }}
-                >
-                  {section}
-                </button>
-              ))}
-            </div>
-
-            {/* Social Icons & Theme Toggle */}
-            <div className="flex items-center space-x-2 ml-4">
-              <ThemeToggle />
-              <a
-                href="https://github.com/hannasage"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-              </a>
-              <a
-                href="https://linkedin.com/in/hannasage"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300" />
-              </a>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden text-black dark:text-white"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <motion.div
-          className={`md:hidden border-t ${
-            isMenuOpen ? 'block' : 'hidden'
-          }`}
-          style={{ 
-            backgroundColor: 'var(--color-background)', 
-            borderColor: 'var(--color-border)' 
-          }}
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ 
-            opacity: isMenuOpen ? 1 : 0, 
-            height: isMenuOpen ? 'auto' : 0 
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="px-4 py-2 space-y-2">
-            {['home', 'about', 'skills', 'experience', 'contact'].map((section) => (
-              <button
-                key={section}
-                onClick={() => scrollToSection(section)}
-                className={`block w-full text-left py-2 capitalize transition-colors duration-200 ${
-                  activeSection === section 
-                    ? 'font-medium' 
-                    : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
-                }`}
-                style={{
-                  color: activeSection === section ? 'var(--color-accent-vibrant)' : undefined
-                }}
-              >
-                {section}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-      </motion.nav>
+      <Navigation activeSection={activeSection} scrollToSection={scrollToSection} />
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">

@@ -1,0 +1,53 @@
+{
+  "tracks": [
+    {
+      "id": "sample1",
+      "name": "Sample Track 1",
+      "artists": [
+        {
+          "id": "artist1",
+          "name": "Sample Artist",
+          "href": "https://api.spotify.com/v1/artists/artist1",
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/artist1"
+          }
+        }
+      ],
+      "album": {
+        "id": "album1",
+        "name": "Sample Album",
+        "images": [
+          {
+            "url": "https://i.scdn.co/image/ab67616d0000b273c8b444df094279e70d0ed856",
+            "height": 640,
+            "width": 640
+          },
+          {
+            "url": "https://i.scdn.co/image/ab67616d00001e02c8b444df094279e70d0ed856",
+            "height": 300,
+            "width": 300
+          },
+          {
+            "url": "https://i.scdn.co/image/ab67616d00004851c8b444df094279e70d0ed856",
+            "height": 64,
+            "width": 64
+          }
+        ],
+        "release_date": "2024-01-01",
+        "href": "https://api.spotify.com/v1/albums/album1",
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/album1"
+        }
+      },
+      "duration_ms": 210000,
+      "preview_url": null,
+      "popularity": 75,
+      "href": "https://api.spotify.com/v1/tracks/sample1",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/sample1"
+      }
+    }
+  ],
+  "lastUpdated": "2024-12-01T12:00:00.000Z",
+  "cacheExpiry": "2024-12-01T18:00:00.000Z"
+}

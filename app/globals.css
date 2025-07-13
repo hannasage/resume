@@ -7,6 +7,7 @@
   --color-primary: #1F2937;
   --color-secondary: #4B5563;
   --color-background: #FAF7F0;
+  --color-background-translucent: rgba(250, 247, 240, 0.8);
   --color-accent: #F5F1E8;
   --color-text-primary: #1F2937;
   --color-text-secondary: #4B5563;
@@ -19,6 +20,7 @@
   --color-primary: #F1F5F9;
   --color-secondary: #CBD5E1;
   --color-background: #1F2937;
+  --color-background-translucent: rgba(31, 41, 55, 0.8);
   --color-accent: #374151;
   --color-text-primary: #F1F5F9;
   --color-text-secondary: #CBD5E1;
