@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import NetworkVisualization from './components/NetworkVisualization';
 import { Typewriter } from 'react-simple-typewriter';
+import ThemeToggle from './components/ThemeToggle';
 
 // Form validation schema
 const contactSchema = z.object({
@@ -79,7 +80,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)' }}>
       {/* Navigation */}
       <motion.nav 
         className="fixed top-0 w-full z-50 transition-all duration-300"
@@ -88,7 +89,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <motion.div 
-              className="text-2xl font-bold text-black"
+              className="text-2xl font-bold text-black dark:text-white"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -104,8 +105,8 @@ export default function Home() {
                   onClick={() => scrollToSection(section)}
                   className={`capitalize transition-colors duration-200 ${
                     activeSection === section 
-                      ? 'text-black border-b-2 border-black' 
-                      : 'text-gray-600 hover:text-black'
+                      ? 'text-black dark:text-white border-b-2 border-black dark:border-white' 
+                      : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
                   }`}
                 >
                   {section}
@@ -113,31 +114,32 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Social Icons */}
+            {/* Social Icons & Theme Toggle */}
             <div className="flex items-center space-x-2 ml-4">
+              <ThemeToggle />
               <a
                 href="https://github.com/hannasage"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 aria-label="GitHub"
               >
-                <Github className="h-5 w-5 text-gray-700" />
+                <Github className="h-5 w-5 text-gray-700 dark:text-gray-300" />
               </a>
               <a
                 href="https://linkedin.com/in/hannasage"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full p-2 hover:bg-gray-100 transition-colors"
+                className="rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="h-5 w-5 text-gray-700" />
+                <Linkedin className="h-5 w-5 text-gray-700 dark:text-gray-300" />
               </a>
             </div>
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden"
+              className="md:hidden text-black dark:text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -147,9 +149,13 @@ export default function Home() {
 
         {/* Mobile Menu */}
         <motion.div
-          className={`md:hidden bg-white border-t border-gray-200 ${
+          className={`md:hidden border-t ${
             isMenuOpen ? 'block' : 'hidden'
           }`}
+          style={{ 
+            backgroundColor: 'var(--color-background)', 
+            borderColor: 'var(--color-border)' 
+          }}
           initial={{ opacity: 0, height: 0 }}
           animate={{ 
             opacity: isMenuOpen ? 1 : 0, 
@@ -164,8 +170,8 @@ export default function Home() {
                 onClick={() => scrollToSection(section)}
                 className={`block w-full text-left py-2 capitalize transition-colors duration-200 ${
                   activeSection === section 
-                    ? 'text-black font-medium' 
-                    : 'text-gray-600 hover:text-black'
+                    ? 'text-black dark:text-white font-medium' 
+                    : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
                 }`}
               >
                 {section}
@@ -191,14 +197,14 @@ export default function Home() {
 
         <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto">
           <motion.h1 
-            className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black mb-4"
+            className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black dark:text-white mb-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
             Hanna Sage,
             <br />
-            <span className="ml-2 text-primary">
+            <span className="ml-2 text-black dark:text-white">
               <Typewriter
                 words={["Software Engineer", "AI Enthusiast", "Creative Technologist", "Full-Stack Developer", "Cloud Architect"]}
                 loop={0}
@@ -211,7 +217,7 @@ export default function Home() {
             </span>
           </motion.h1>
           <motion.h2 
-            className="text-2xl lg:text-3xl text-gray-600 mb-6"
+            className="text-2xl lg:text-3xl text-gray-600 dark:text-gray-400 mb-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
@@ -219,7 +225,7 @@ export default function Home() {
             {/* Optionally keep a subtitle here or remove */}
           </motion.h2>
           <motion.div 
-            className="text-lg text-gray-600 mb-8"
+            className="text-lg text-gray-600 dark:text-gray-400 mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -235,13 +241,35 @@ export default function Home() {
           >
             <button 
               onClick={() => scrollToSection('experience')}
-              className="px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors duration-200"
+              className="px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
+              style={{ 
+                backgroundColor: 'var(--color-accent-vibrant)', 
+                color: 'white'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = '0.9';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = '1';
+              }}
             >
               View My Work
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
-              className="px-8 py-3 border-2 border-black text-black rounded-lg hover:bg-black hover:text-white transition-colors duration-200"
+              className="px-8 py-3 border-2 rounded-lg font-semibold transition-colors duration-200"
+              style={{ 
+                borderColor: 'var(--color-accent-vibrant)', 
+                color: 'var(--color-accent-vibrant)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'var(--color-accent-vibrant)';
+                e.currentTarget.style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = 'var(--color-accent-vibrant)';
+              }}
             >
               Get In Touch
             </button>
@@ -258,7 +286,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gray-50">
+      <section id="about" className="py-20" style={{ backgroundColor: 'var(--color-accent)' }}>
         <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -268,8 +296,8 @@ export default function Home() {
             className="grid lg:grid-cols-5 gap-12 items-center"
           >
             <div className="lg:col-span-3">
-              <h2 className="text-4xl font-bold text-black mb-8">About Me</h2>
-              <div className="space-y-6 text-lg text-gray-700">
+              <h2 className="text-4xl font-bold text-black dark:text-white mb-8">About Me</h2>
+              <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
                 <p>
                   Creative and technically adept Software Engineer with a passion for building 
                   innovative solutions that bridge the gap between complex technical challenges 
@@ -290,8 +318,8 @@ export default function Home() {
             </div>
             
             <div className="lg:col-span-2">
-              <div className="bg-white p-8 rounded-lg shadow-lg">
-                <h3 className="text-2xl font-bold text-black mb-6">Key Highlights</h3>
+              <div className="p-8 rounded-lg shadow-lg" style={{ backgroundColor: 'var(--color-background)' }}>
+                <h3 className="text-2xl font-bold text-black dark:text-white mb-6">Key Highlights</h3>
                 <div className="space-y-4">
                   {[
                     '5+ years full-stack development',
@@ -308,8 +336,8 @@ export default function Home() {
                       viewport={{ once: true }}
                       className="flex items-center space-x-3"
                     >
-                      <div className="w-2 h-2 bg-black rounded-full"></div>
-                      <span className="text-gray-700">{highlight}</span>
+                      <div className="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
+                      <span className="text-gray-700 dark:text-gray-300">{highlight}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -329,8 +357,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-black mb-4">Skills & Technologies</h2>
-            <p className="text-xl text-gray-600">Comprehensive toolkit for modern software development</p>
+            <h2 className="text-4xl font-bold text-black dark:text-white mb-4">Skills & Technologies</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400">Comprehensive toolkit for modern software development</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -339,56 +367,56 @@ export default function Home() {
                 title: "Languages & Frameworks",
                 skills: ["Python", "JavaScript/TypeScript", "Go", "Java", "Kotlin", "React", "Next.js", "Node.js", "Express.js", "SQL", "GraphQL"],
                 colors: [
-                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
-                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" },
-                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
-                  { bg: "bg-purple-100 text-purple-800", border: "border-purple-300" },
-                  { bg: "bg-pink-100 text-pink-800", border: "border-pink-300" },
-                  { bg: "bg-sky-100 text-sky-800", border: "border-sky-300" },
-                  { bg: "bg-indigo-100 text-indigo-800", border: "border-indigo-300" },
-                  { bg: "bg-lime-100 text-lime-800", border: "border-lime-300" },
-                  { bg: "bg-orange-100 text-orange-800", border: "border-orange-300" },
-                  { bg: "bg-gray-100 text-gray-800", border: "border-gray-300" },
-                  { bg: "bg-teal-100 text-teal-800", border: "border-teal-300" }
+                  "bg-blue-200 text-blue-900 dark:bg-blue-800 dark:text-blue-100 border border-blue-300 dark:border-blue-600",
+                  "bg-amber-200 text-amber-900 dark:bg-amber-800 dark:text-amber-100 border border-amber-300 dark:border-amber-600",
+                  "bg-emerald-200 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100 border border-emerald-300 dark:border-emerald-600",
+                  "bg-purple-200 text-purple-900 dark:bg-purple-800 dark:text-purple-100 border border-purple-300 dark:border-purple-600",
+                  "bg-pink-200 text-pink-900 dark:bg-pink-800 dark:text-pink-100 border border-pink-300 dark:border-pink-600",
+                  "bg-cyan-200 text-cyan-900 dark:bg-cyan-800 dark:text-cyan-100 border border-cyan-300 dark:border-cyan-600",
+                  "bg-indigo-200 text-indigo-900 dark:bg-indigo-800 dark:text-indigo-100 border border-indigo-300 dark:border-indigo-600",
+                  "bg-lime-200 text-lime-900 dark:bg-lime-800 dark:text-lime-100 border border-lime-300 dark:border-lime-600",
+                  "bg-orange-200 text-orange-900 dark:bg-orange-800 dark:text-orange-100 border border-orange-300 dark:border-orange-600",
+                  "bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-100 border border-slate-300 dark:border-slate-600",
+                  "bg-teal-200 text-teal-900 dark:bg-teal-800 dark:text-teal-100 border border-teal-300 dark:border-teal-600"
                 ]
               },
               {
                 title: "Backend & Infrastructure",
                 skills: ["AWS (EC2, S3, Lambda, RDS, SageMaker)", "Azure", "GCP", "Docker", "Kubernetes", "Terraform", "GitHub Actions", "CI/CD", "PostgreSQL", "Supabase"],
                 colors: [
-                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" },
-                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
-                  { bg: "bg-red-100 text-red-800", border: "border-red-300" },
-                  { bg: "bg-sky-100 text-sky-800", border: "border-sky-300" },
-                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
-                  { bg: "bg-purple-100 text-purple-800", border: "border-purple-300" },
-                  { bg: "bg-gray-100 text-gray-800", border: "border-gray-300" },
-                  { bg: "bg-pink-100 text-pink-800", border: "border-pink-300" },
-                  { bg: "bg-indigo-100 text-indigo-800", border: "border-indigo-300" },
-                  { bg: "bg-lime-100 text-lime-800", border: "border-lime-300" }
+                  "bg-amber-200 text-amber-900 dark:bg-amber-800 dark:text-amber-100 border border-amber-300 dark:border-amber-600",
+                  "bg-blue-200 text-blue-900 dark:bg-blue-800 dark:text-blue-100 border border-blue-300 dark:border-blue-600",
+                  "bg-red-200 text-red-900 dark:bg-red-800 dark:text-red-100 border border-red-300 dark:border-red-600",
+                  "bg-cyan-200 text-cyan-900 dark:bg-cyan-800 dark:text-cyan-100 border border-cyan-300 dark:border-cyan-600",
+                  "bg-emerald-200 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100 border border-emerald-300 dark:border-emerald-600",
+                  "bg-purple-200 text-purple-900 dark:bg-purple-800 dark:text-purple-100 border border-purple-300 dark:border-purple-600",
+                  "bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-100 border border-slate-300 dark:border-slate-600",
+                  "bg-pink-200 text-pink-900 dark:bg-pink-800 dark:text-pink-100 border border-pink-300 dark:border-pink-600",
+                  "bg-indigo-200 text-indigo-900 dark:bg-indigo-800 dark:text-indigo-100 border border-indigo-300 dark:border-indigo-600",
+                  "bg-lime-200 text-lime-900 dark:bg-lime-800 dark:text-lime-100 border border-lime-300 dark:border-lime-600"
                 ]
               },
               {
                 title: "AI & Data Tools",
                 skills: ["LangChain", "LlamaIndex", "Hugging Face Transformers", "OpenAI API", "Model Context Protocol", "Pandas", "NumPy"],
                 colors: [
-                  { bg: "bg-purple-100 text-purple-800", border: "border-purple-300" },
-                  { bg: "bg-pink-100 text-pink-800", border: "border-pink-300" },
-                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" },
-                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
-                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
-                  { bg: "bg-orange-100 text-orange-800", border: "border-orange-300" },
-                  { bg: "bg-sky-100 text-sky-800", border: "border-sky-300" }
+                  "bg-purple-200 text-purple-900 dark:bg-purple-800 dark:text-purple-100 border border-purple-300 dark:border-purple-600",
+                  "bg-pink-200 text-pink-900 dark:bg-pink-800 dark:text-pink-100 border border-pink-300 dark:border-pink-600",
+                  "bg-amber-200 text-amber-900 dark:bg-amber-800 dark:text-amber-100 border border-amber-300 dark:border-amber-600",
+                  "bg-blue-200 text-blue-900 dark:bg-blue-800 dark:text-blue-100 border border-blue-300 dark:border-blue-600",
+                  "bg-emerald-200 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100 border border-emerald-300 dark:border-emerald-600",
+                  "bg-orange-200 text-orange-900 dark:bg-orange-800 dark:text-orange-100 border border-orange-300 dark:border-orange-600",
+                  "bg-cyan-200 text-cyan-900 dark:bg-cyan-800 dark:text-cyan-100 border border-cyan-300 dark:border-cyan-600"
                 ]
               },
               {
                 title: "Leadership & Soft Skills",
                 skills: ["Team Leadership & Mentoring", "Cross-functional Communication", "Creative Problem Solving", "Agile Methodology"],
                 colors: [
-                  { bg: "bg-gray-100 text-gray-800", border: "border-gray-300" },
-                  { bg: "bg-blue-100 text-blue-800", border: "border-blue-300" },
-                  { bg: "bg-green-100 text-green-800", border: "border-green-300" },
-                  { bg: "bg-yellow-100 text-yellow-800", border: "border-yellow-300" }
+                  "bg-slate-200 text-slate-900 dark:bg-slate-700 dark:text-slate-100 border border-slate-300 dark:border-slate-600",
+                  "bg-blue-200 text-blue-900 dark:bg-blue-800 dark:text-blue-100 border border-blue-300 dark:border-blue-600",
+                  "bg-emerald-200 text-emerald-900 dark:bg-emerald-800 dark:text-emerald-100 border border-emerald-300 dark:border-emerald-600",
+                  "bg-amber-200 text-amber-900 dark:bg-amber-800 dark:text-amber-100 border border-amber-300 dark:border-amber-600"
                 ]
               }
             ].map((category, categoryIndex) => (
@@ -398,16 +426,17 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: categoryIndex * 0.1, duration: 0.6 }}
                 viewport={{ once: true }}
-                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                style={{ backgroundColor: 'var(--color-background)' }}
               >
-                <h3 className="text-xl font-bold text-black mb-4">{category.title}</h3>
+                <h3 className="text-xl font-bold text-black dark:text-white mb-4">{category.title}</h3>
                 <div className="flex flex-wrap gap-2">
                   {category.skills.map((skill, skillIndex) => {
-                    const color = category.colors[skillIndex % category.colors.length];
+                    const colorClasses = category.colors[skillIndex % category.colors.length];
                     return (
                       <span
                         key={skill}
-                        className={`inline-block px-3 py-1 rounded-full text-sm font-medium shadow-sm ${color.bg} ${color.border} max-w-[14rem] truncate overflow-hidden whitespace-nowrap`}
+                        className={`inline-block px-3 py-1 rounded-full text-sm font-medium shadow-sm ${colorClasses} max-w-[14rem] truncate overflow-hidden whitespace-nowrap`}
                       >
                         {skill}
                       </span>
@@ -421,7 +450,7 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 bg-gray-50">
+      <section id="experience" className="py-20" style={{ backgroundColor: 'var(--color-accent)' }}>
         <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -430,13 +459,13 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-black mb-4">Professional Experience</h2>
-            <p className="text-xl text-gray-600">Building impactful solutions across diverse domains</p>
+            <h2 className="text-4xl font-bold text-black dark:text-white mb-4">Professional Experience</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400">Building impactful solutions across diverse domains</p>
           </motion.div>
 
           <div className="relative">
             {/* Timeline line */}
-            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gray-300"></div>
+            <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gray-300 dark:bg-gray-600"></div>
             
             {[
               {
@@ -497,21 +526,21 @@ export default function Home() {
                 }`}
               >
                 {/* Timeline dot */}
-                <div className={`absolute top-6 w-4 h-4 bg-black rounded-full ${
+                <div className={`absolute top-6 w-4 h-4 bg-black dark:bg-white rounded-full ${
                   index % 2 === 0 ? 'left-2 md:left-auto md:right-[-8px]' : 'left-2 md:left-[-8px]'
                 }`}></div>
                 
                 <div className={`ml-12 md:ml-0 ${
                   index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'
                 }`}>
-                  <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-                    <h3 className="text-xl font-bold text-black">{job.title}</h3>
-                    <p className="text-lg text-gray-600 font-medium">{job.company}</p>
-                    <p className="text-gray-500 mb-4">{job.period} • {job.location}</p>
+                  <div className="p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" style={{ backgroundColor: 'var(--color-background)' }}>
+                    <h3 className="text-xl font-bold text-black dark:text-white">{job.title}</h3>
+                    <p className="text-lg text-gray-600 dark:text-gray-300 font-medium">{job.company}</p>
+                    <p className="text-gray-500 dark:text-gray-400 mb-4">{job.period} • {job.location}</p>
                     <ul className="space-y-2">
                       {job.achievements.map((achievement, achievementIndex) => (
-                        <li key={achievementIndex} className="text-gray-700 flex items-start">
-                          <span className="text-black mr-2">•</span>
+                        <li key={achievementIndex} className="text-gray-700 dark:text-gray-300 flex items-start">
+                          <span className="text-black dark:text-white mr-2">•</span>
                           {achievement}
                         </li>
                       ))}
@@ -535,32 +564,32 @@ export default function Home() {
               viewport={{ once: true }}
               className="space-y-8 w-full max-w-md"
             >
-              <div className="bg-gray-50 p-6 rounded-lg" id="contact-info">
-                <h3 className="text-xl font-bold text-black mb-6">Contact Information</h3>
+              <div className="p-6 rounded-lg" id="contact-info" style={{ backgroundColor: 'var(--color-accent)' }}>
+                <h3 className="text-xl font-bold text-black dark:text-white mb-6">Contact Information</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-gray-600" />
+                    <Mail className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                     <a 
                       href="mailto:sagemac.ext@gmail.com"
-                      className="text-gray-700 hover:text-black transition-colors duration-200"
+                      className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-200"
                     >
                       sagemac.ext@gmail.com
                     </a>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <Linkedin className="h-5 w-5 text-gray-600" />
+                    <Linkedin className="h-5 w-5 text-gray-600 dark:text-gray-400" />
                     <a 
                       href="https://linkedin.com/in/hannasage"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-700 hover:text-black transition-colors duration-200"
+                      className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-200"
                     >
                       linkedin.com/in/hannasage
                     </a>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <MapPin className="h-5 w-5 text-gray-600" />
-                    <span className="text-gray-700">Baltimore, Maryland</span>
+                    <MapPin className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+                    <span className="text-gray-700 dark:text-gray-300">Baltimore, Maryland</span>
                   </div>
                 </div>
               </div>
@@ -570,7 +599,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-black text-white py-8">
+      <footer className="bg-black dark:bg-gray-900 text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p>&copy; 2025 Hanna Sage. All rights reserved.</p>
         </div>

@@ -3,14 +3,27 @@
 @tailwind utilities;
 
 :root {
-  /* Color Palette */
-  --color-primary: #000000;
-  --color-secondary: #6B7280;
-  --color-background: #FFFFFF;
-  --color-accent: #F9FAFB;
-  --color-text-primary: #111827;
-  --color-text-secondary: #6B7280;
-  --color-border: #E5E7EB;
+  /* Light Theme Colors (Claude.ai Manila/Cream inspired) */
+  --color-primary: #2F2F2F;
+  --color-secondary: #6B6B6B;
+  --color-background: #FAF7F0;
+  --color-accent: #F5F1E8;
+  --color-text-primary: #2F2F2F;
+  --color-text-secondary: #6B6B6B;
+  --color-border: #E8E2D4;
+  --color-accent-vibrant: #3B82F6;
+}
+
+.dark {
+  /* Dark Theme Colors (VS Code Dark inspired) */
+  --color-primary: #D4D4D4;
+  --color-secondary: #9C9C9C;
+  --color-background: #1E1E1E;
+  --color-accent: #252526;
+  --color-text-primary: #D4D4D4;
+  --color-text-secondary: #9C9C9C;
+  --color-border: #3E3E42;
+  --color-accent-vibrant: #F59E0B;
 }
 
 * {
@@ -65,6 +78,12 @@ body {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass {
+  background: rgba(37, 37, 38, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(62, 62, 66, 0.4);
 }
 
 /* Typing animation */
