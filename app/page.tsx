@@ -199,10 +199,9 @@ export default function Home() {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1, duration: 0.5 }}
                       viewport={{ once: true }}
-                      className="flex items-center space-x-3"
+                      className="text-gray-700 dark:text-gray-300"
                     >
-                      <div className="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
-                      <span className="text-gray-700 dark:text-gray-300">{highlight}</span>
+                      {highlight}
                     </motion.div>
                   ))}
                 </div>
