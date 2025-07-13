@@ -187,6 +187,41 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
     // Create connections between related nodes
     const connections: THREE.Line[] = [];
     
+    // Function to create connections between nodes
+    const createConnection = (
+      nodes: NetworkNode[], 
+      fromId: string, 
+      toId: string, 
+      scene: THREE.Scene, 
+      connections: THREE.Line[]
+    ) => {
+      const fromNode = nodes.find(n => n.id === fromId);
+      const toNode = nodes.find(n => n.id === toId);
+      
+      if (fromNode && toNode) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+          fromNode.position,
+          toNode.position
+        ]);
+        
+        // Theme-aware line color
+        const lineColor = effectiveTheme === 'light' ? 0xEA580C : 0x93C5FD; // Burnt orange in light, light blue in dark
+        
+        const material = new THREE.LineBasicMaterial({ 
+          color: lineColor,
+          transparent: true,
+          opacity: effectiveTheme === 'light' ? 0.4 : 0.3
+        });
+        
+        const line = new THREE.Line(geometry, material);
+        scene.add(line);
+        connections.push(line);
+        
+        fromNode.connections.push(toId);
+        toNode.connections.push(fromId);
+      }
+    };
+    
     // React ecosystem
     createConnection(nodes, 'react', 'typescript', scene, connections);
     createConnection(nodes, 'react', 'nextjs', scene, connections);
@@ -327,39 +362,6 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
     };
   }, [effectiveTheme]);
 
-  const createConnection = (
-    nodes: NetworkNode[], 
-    fromId: string, 
-    toId: string, 
-    scene: THREE.Scene, 
-    connections: THREE.Line[]
-  ) => {
-    const fromNode = nodes.find(n => n.id === fromId);
-    const toNode = nodes.find(n => n.id === toId);
-    
-    if (fromNode && toNode) {
-      const geometry = new THREE.BufferGeometry().setFromPoints([
-        fromNode.position,
-        toNode.position
-      ]);
-      
-      // Theme-aware line color
-      const lineColor = effectiveTheme === 'light' ? 0xEA580C : 0x93C5FD; // Burnt orange in light, light blue in dark
-      
-      const material = new THREE.LineBasicMaterial({ 
-        color: lineColor,
-        transparent: true,
-        opacity: effectiveTheme === 'light' ? 0.4 : 0.3
-      });
-      
-      const line = new THREE.Line(geometry, material);
-      scene.add(line);
-      connections.push(line);
-      
-      fromNode.connections.push(toId);
-      toNode.connections.push(fromId);
-    }
-  };
 
   return (
     <div
