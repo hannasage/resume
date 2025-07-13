@@ -60,17 +60,17 @@ export function setupAnimations(
 
     // Connection animations
     connections.forEach((connection) => {
-      // Shimmer effect
-      const shimmer = Math.sin(state.time * 3 + connection.shimmerPhase) * 0.5 + 0.5;
-      connection.material.opacity = connection.originalOpacity * (0.8 + shimmer * 0.4);
+      // Enhanced shimmer effect
+      const shimmer = Math.sin(state.time * 2 + connection.shimmerPhase) * 0.3 + 0.7;
+      connection.material.opacity = connection.originalOpacity * shimmer;
 
       // Highlight connections to hovered node
       if (state.hoveredNodeId && 
           (connection.from === state.hoveredNodeId || connection.to === state.hoveredNodeId)) {
-        connection.material.opacity = connection.originalOpacity * 2;
-        connection.material.color.setHex(0xD1D5DB); // Brighter color
+        connection.material.opacity = Math.min(connection.originalOpacity * 1.5, 1);
+        connection.material.color.setHex(0x60A5FA); // Bright blue
       } else {
-        connection.material.color.setHex(0xE5E7EB); // Reset to original color
+        connection.material.color.setHex(0x93C5FD); // Reset to light blue
       }
     });
 

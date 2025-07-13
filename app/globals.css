@@ -7,11 +7,13 @@
   --color-primary: #1F2937;
   --color-secondary: #4B5563;
   --color-background: #FAF7F0;
+  --color-background-translucent: rgba(250, 247, 240, 0.8);
   --color-accent: #F5F1E8;
   --color-text-primary: #1F2937;
   --color-text-secondary: #4B5563;
   --color-border: #E8E2D4;
-  --color-accent-vibrant: #3B82F6;
+  --color-accent-vibrant: #EA580C;
+  --color-accent-gradient: linear-gradient(135deg, #EA580C, #F97316);
 }
 
 .dark {
@@ -19,11 +21,13 @@
   --color-primary: #F1F5F9;
   --color-secondary: #CBD5E1;
   --color-background: #1F2937;
+  --color-background-translucent: rgba(31, 41, 55, 0.8);
   --color-accent: #374151;
   --color-text-primary: #F1F5F9;
   --color-text-secondary: #CBD5E1;
   --color-border: #4B5563;
   --color-accent-vibrant: #F59E0B;
+  --color-accent-gradient: linear-gradient(135deg, #8B5CF6, #A78BFA);
 }
 
 * {
@@ -34,6 +38,8 @@
 
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -44,6 +50,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Custom scrollbar */
@@ -84,6 +92,22 @@ body {
   background: rgba(37, 37, 38, 0.3);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(62, 62, 66, 0.4);
+}
+
+/* Accent gradient utilities */
+.bg-accent-gradient {
+  background: var(--color-accent-gradient);
+}
+
+.text-accent-gradient {
+  background: var(--color-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.border-accent-gradient {
+  border-image: var(--color-accent-gradient) 1;
 }
 
 /* Typing animation */

@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import type { NetworkNode, NetworkConnection } from './types';
 
 const CONNECTION_STRENGTHS = {
-  strong: { opacity: 0.6, width: 2 },
-  medium: { opacity: 0.4, width: 1.5 },
-  weak: { opacity: 0.2, width: 1 },
+  strong: { opacity: 0.8, width: 3 },
+  medium: { opacity: 0.6, width: 2 },
+  weak: { opacity: 0.4, width: 1.5 },
 };
 
 export function createConnections(scene: THREE.Scene, nodes: NetworkNode[]): NetworkConnection[] {
@@ -81,9 +81,9 @@ function createConnection(
   
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
   
-  // Create material with glow effect
+  // Create material with enhanced visibility
   const material = new THREE.LineBasicMaterial({
-    color: 0xE5E7EB, // Light gray
+    color: 0x93C5FD, // Light blue for better visibility
     transparent: true,
     opacity: opacity,
     linewidth: width,
