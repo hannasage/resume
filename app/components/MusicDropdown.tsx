@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Play, Clock } from 'lucide-react';
+import { ExternalLink, Clock } from 'lucide-react';
 import { MusicDropdownProps } from '../lib/spotify-types';
 
 export default function MusicDropdown({ isOpen, onClose, tracks, loading, error }: MusicDropdownProps) {
