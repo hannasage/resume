@@ -95,12 +95,11 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
                 onClick={() => scrollToSection(section)}
                 className={`capitalize transition-colors duration-200 ${
                   activeSection === section 
-                    ? 'border-b-2' 
+                    ? 'border-b-2 text-accent-gradient' 
                     : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
                 }`}
                 style={{
-                  color: activeSection === section ? 'var(--color-accent-vibrant)' : undefined,
-                  borderBottomColor: activeSection === section ? 'var(--color-accent-vibrant)' : undefined
+                  borderImage: activeSection === section ? 'var(--color-accent-gradient) 1' : undefined
                 }}
               >
                 {section}
@@ -202,12 +201,9 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
               onClick={() => handleMenuClick(section)}
               className={`block w-full text-left py-2 capitalize transition-colors duration-200 ${
                 activeSection === section 
-                  ? 'font-medium' 
+                  ? 'font-medium text-accent-gradient' 
                   : 'text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white'
               }`}
-              style={{
-                color: activeSection === section ? 'var(--color-accent-vibrant)' : undefined
-              }}
             >
               {section}
             </button>

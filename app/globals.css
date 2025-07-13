@@ -13,6 +13,7 @@
   --color-text-secondary: #4B5563;
   --color-border: #E8E2D4;
   --color-accent-vibrant: #EA580C;
+  --color-accent-gradient: linear-gradient(135deg, #EA580C, #F97316);
 }
 
 .dark {
@@ -26,6 +27,7 @@
   --color-text-secondary: #CBD5E1;
   --color-border: #4B5563;
   --color-accent-vibrant: #F59E0B;
+  --color-accent-gradient: linear-gradient(135deg, #8B5CF6, #A78BFA);
 }
 
 * {
@@ -90,6 +92,22 @@ body {
   background: rgba(37, 37, 38, 0.3);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(62, 62, 66, 0.4);
+}
+
+/* Accent gradient utilities */
+.bg-accent-gradient {
+  background: var(--color-accent-gradient);
+}
+
+.text-accent-gradient {
+  background: var(--color-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.border-accent-gradient {
+  border-image: var(--color-accent-gradient) 1;
 }
 
 /* Typing animation */

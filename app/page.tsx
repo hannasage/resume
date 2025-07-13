@@ -127,44 +127,16 @@ export default function Home() {
             <p><b>5+ years</b> building scalable systems and leading teams. Currently expanding <b>AI/ML expertise.</b></p>
           </motion.div>
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
             <button 
               onClick={() => scrollToSection('experience')}
-              className="px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
-              style={{ 
-                backgroundColor: 'var(--color-accent-vibrant)', 
-                color: 'white'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = '0.9';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = '1';
-              }}
+              className="px-8 py-3 rounded-lg font-semibold transition-all duration-200 bg-accent-gradient text-white hover:opacity-90"
             >
               View My Work
-            </button>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="px-8 py-3 border-2 rounded-lg font-semibold transition-colors duration-200"
-              style={{ 
-                borderColor: 'var(--color-accent-vibrant)', 
-                color: 'var(--color-accent-vibrant)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'var(--color-accent-vibrant)';
-                e.currentTarget.style.color = 'white';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = 'var(--color-accent-vibrant)';
-              }}
-            >
-              Get In Touch
             </button>
           </motion.div>
         </div>
@@ -189,7 +161,7 @@ export default function Home() {
             className="grid lg:grid-cols-5 gap-12 items-center"
           >
             <div className="lg:col-span-3">
-              <h2 className="text-4xl font-bold mb-8" style={{ color: 'var(--color-accent-vibrant)' }}>About Me</h2>
+              <h2 className="text-4xl font-bold mb-8 text-accent-gradient">About Me</h2>
               <div className="space-y-6 text-lg text-gray-700 dark:text-gray-300">
                 <p>
                   Creative and technically adept Software Engineer with a passion for building 
@@ -250,7 +222,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-4" style={{ color: 'var(--color-accent-vibrant)' }}>Skills & Technologies</h2>
+            <h2 className="text-4xl font-bold mb-4 text-accent-gradient">Skills & Technologies</h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">Comprehensive toolkit for modern software development</p>
           </motion.div>
 
@@ -352,7 +324,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-4" style={{ color: 'var(--color-accent-vibrant)' }}>Professional Experience</h2>
+            <h2 className="text-4xl font-bold mb-4 text-accent-gradient">Professional Experience</h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">Building impactful solutions across diverse domains</p>
           </motion.div>
 
@@ -461,7 +433,7 @@ export default function Home() {
               className="space-y-8 w-full max-w-md"
             >
               <div className="p-6 rounded-lg" id="contact-info" style={{ backgroundColor: 'var(--color-accent)' }}>
-                <h3 className="text-xl font-bold mb-6" style={{ color: 'var(--color-accent-vibrant)' }}>Contact Information</h3>
+                <h3 className="text-xl font-bold mb-6 text-accent-gradient">Contact Information</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-gray-600 dark:text-gray-400" />
