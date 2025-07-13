@@ -25,6 +25,9 @@
 *.pem
 .idea
 
+# SSL certificates
+/certs/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

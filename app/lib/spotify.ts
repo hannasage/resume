@@ -41,10 +41,18 @@ export class SpotifyService {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch top tracks: ${response.statusText}`);
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch top tracks: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
-    return response.json();
+    const responseText = await response.text();
+    try {
+      return JSON.parse(responseText);
+    } catch (parseError) {
+      console.error('JSON Parse Error:', parseError);
+      console.error('Response text:', responseText);
+      throw new Error(`Invalid JSON response from Spotify: ${parseError instanceof Error ? parseError.message : 'Unknown parse error'}`);
+    }
   }
 
   async refreshAccessToken(refreshToken: string): Promise<SpotifyAuthTokens> {
