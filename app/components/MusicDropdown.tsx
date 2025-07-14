@@ -57,7 +57,7 @@ export default function MusicDropdown({ isOpen, onClose, tracks, loading, error 
           <div className="p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-lg font-semibold text-black dark:text-white">
-                My Top Tracks
+                Dev Music
               </h3>
               <div className="flex items-center space-x-2">
                 <a
