@@ -10,8 +10,8 @@ module.exports = {
   safelist: [
     // Gradient backgrounds for skill tags and brand name
     'bg-gradient-to-r', 'bg-clip-text', 'text-transparent',
-    'from-blue-100', 'to-sky-100', 'from-blue-500', 'to-cyan-400',
-    'from-lime-400', 'to-green-400',
+    'from-blue-200', 'to-sky-200', 'from-blue-500', 'to-cyan-400',
+    'from-blue-600', 'to-cyan-500', 'from-lime-400', 'to-green-400',
     'from-amber-100', 'to-yellow-100', 'from-amber-400', 'to-yellow-300',
     'from-emerald-100', 'to-green-100', 'from-emerald-400', 'to-green-300',
     'from-purple-100', 'to-violet-100', 'from-purple-400', 'to-pink-400',
@@ -29,7 +29,7 @@ module.exports = {
     'text-orange-800', 'text-slate-800', 'text-teal-800', 'text-red-800',
     'text-white', 'text-gray-900',
     // Border colors
-    'border-blue-200', 'border-amber-200', 'border-emerald-200', 'border-purple-200',
+    'border-blue-200', 'border-blue-300', 'border-amber-200', 'border-emerald-200', 'border-purple-200',
     'border-pink-200', 'border-cyan-200', 'border-indigo-200', 'border-lime-200',
     'border-orange-200', 'border-slate-200', 'border-teal-200', 'border-red-200',
     'border-blue-400', 'border-amber-300', 'border-emerald-300', 'border-purple-300',
