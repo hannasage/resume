@@ -3,31 +3,13 @@
   "subtitle": "Personal experiments and passion projects",
   "projects": [
     {
-      "id": "example-project-1",
-      "title": "Example Project 1",
-      "description": "A showcase project demonstrating full-stack development with modern technologies and best practices.",
-      "technologies": ["React", "Node.js", "PostgreSQL", "AWS"],
-      "liveUrl": "https://example.com",
-      "githubUrl": "https://github.com/hannasage/example-project",
-      "featured": true
-    },
-    {
-      "id": "example-project-2", 
-      "title": "Example Project 2",
-      "description": "An exploration into machine learning applications with a focus on practical, real-world solutions.",
-      "technologies": ["Python", "TensorFlow", "FastAPI", "Docker"],
-      "liveUrl": "https://example-ml.com",
-      "githubUrl": "https://github.com/hannasage/ml-project",
-      "featured": false
-    },
-    {
-      "id": "example-project-3",
-      "title": "Example Project 3", 
-      "description": "A mobile-first application built with React Native, showcasing cross-platform development skills.",
-      "technologies": ["React Native", "TypeScript", "Firebase", "Expo"],
-      "liveUrl": "https://apps.apple.com/app/example",
+      "id": "vinyl-collection",
+      "title": "AI-Powered Vinyl Collection",
+      "description": "This is my personal vinyl collection, managed by AI to keep track of albums, artists, and release dates. Browse through the catalog to explore what's on the shelves and discover new music.",
+      "technologies": ["Next.js", "Supabase", "OpenAI"],
+      "liveUrl": "https://vinyl.hannasage.love/",
       "githubUrl": null,
-      "featured": false
+      "featured": true
     }
   ]
 }

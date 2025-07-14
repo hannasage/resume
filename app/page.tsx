@@ -245,19 +245,19 @@ export default function Home() {
 
       {/* Side Projects Section */}
       <section id="projects" className="py-20">
-        <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[80vw] xl:max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4 text-accent-gradient">{sideProjectsData.title}</h2>
             <p className="text-xl text-gray-600 dark:text-gray-400">{sideProjectsData.subtitle}</p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-wrap justify-center gap-6">
             {sideProjectsData.projects.map((project, index) => (
               <AnimatedSection
                 key={project.id}
                 delay={index * 0.1}
                 duration={0.6}
-                className="h-full"
+                className="w-full max-w-sm md:w-80 lg:w-96 flex-shrink-0"
               >
                 <ProjectCard project={project} />
               </AnimatedSection>

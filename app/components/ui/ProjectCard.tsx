@@ -22,10 +22,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card className="h-full flex flex-col">
       <div className="flex-1">
-        <div className="flex items-start justify-between mb-4">
-          <h3 className="text-xl font-bold text-black dark:text-white">{project.title}</h3>
+        <div className="flex items-start justify-between mb-4 gap-3">
+          <h3 className="text-xl font-bold text-black dark:text-white flex-1">{project.title}</h3>
           {project.featured && (
-            <span className="px-2 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-orange-100 to-red-100 text-orange-800 dark:from-orange-400 dark:to-red-400 dark:text-white border border-orange-200 dark:border-orange-300">
+            <span className="px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-orange-100 to-red-100 text-orange-800 dark:from-orange-400 dark:to-red-400 dark:text-white border border-orange-200 dark:border-orange-300 flex-shrink-0">
               Featured
             </span>
           )}
