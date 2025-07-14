@@ -27,7 +27,10 @@ export interface SkillsData {
   title: string;
   subtitle: string;
   categories: SkillCategory[];
-  colorMap: Record<string, string>;
+  colorMap: Record<string, {
+    light: string;
+    dark: string;
+  }>;
 }
 
 export interface Achievement {

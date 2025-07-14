@@ -206,12 +206,12 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-black dark:text-white mb-4">{category.title}</h3>
                   <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill) => {
-                      const colorClasses = skillsData.colorMap[skill.color];
+                      const colorConfig = skillsData.colorMap[skill.color];
                       return (
                         <SkillTag
                           key={skill.name}
                           skill={skill}
-                          colorClasses={colorClasses}
+                          colorConfig={colorConfig}
                         />
                       );
                     })}
