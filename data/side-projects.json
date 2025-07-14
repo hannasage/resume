@@ -1,0 +1,15 @@
+{
+  "title": "Side Projects",
+  "subtitle": "Personal experiments and passion projects",
+  "projects": [
+    {
+      "id": "vinyl-collection",
+      "title": "AI-Powered Vinyl Collection",
+      "description": "This is my personal vinyl collection, managed by AI to keep track of albums, artists, and release dates. Browse through the catalog to explore what's on the shelves and discover new music.",
+      "technologies": ["Next.js", "Supabase", "OpenAI"],
+      "liveUrl": "https://vinyl.hannasage.love/",
+      "githubUrl": null,
+      "featured": true
+    }
+  ]
+}

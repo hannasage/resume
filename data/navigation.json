@@ -1,0 +1,30 @@
+{
+  "brand": "Hanna Sage",
+  "menuItems": [
+    { "id": "about", "label": "About" },
+    { "id": "skills", "label": "Skills" },
+    { "id": "experience", "label": "Work" },
+    { "id": "projects", "label": "Projects" },
+    { "id": "contact", "label": "Contact" }
+  ],
+  "socialLinks": [
+    {
+      "id": "github",
+      "url": "https://github.com/hannasage",
+      "label": "GitHub",
+      "icon": "Github"
+    },
+    {
+      "id": "linkedin", 
+      "url": "https://linkedin.com/in/hannasage",
+      "label": "LinkedIn",
+      "icon": "Linkedin"
+    }
+  ],
+  "mobile": {
+    "spotifyPlaylist": {
+      "url": "https://open.spotify.com/playlist/5v6rho05qMtlqC829KfDjR?si=c9a37cb94aad49b5",
+      "label": "My dev playlist!"
+    }
+  }
+}
