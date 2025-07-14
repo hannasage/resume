@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./context/ThemeContext";
+import { getMetadataInfo } from "./lib/content-loader";
+
+const metadataInfo = getMetadataInfo();
 
 export const metadata: Metadata = {
-  title: "Hanna Sage - Software Engineer & AI Enthusiast",
-  description: "Creative technologist with 5+ years building scalable systems and leading teams. Currently expanding AI/ML expertise in Baltimore, Maryland.",
-  keywords: ["Software Engineer", "AI", "Machine Learning", "Full Stack", "React", "Python", "Baltimore"],
-  authors: [{ name: "Hanna Sage" }],
+  title: metadataInfo.title,
+  description: metadataInfo.description,
+  keywords: metadataInfo.keywords,
+  authors: [{ name: metadataInfo.author }],
   openGraph: {
-    title: "Hanna Sage - Software Engineer & AI Enthusiast",
-    description: "Creative technologist with 5+ years building scalable systems and leading teams.",
-    type: "website",
-    locale: "en_US",
+    title: metadataInfo.openGraph.title,
+    description: metadataInfo.openGraph.description,
+    type: metadataInfo.openGraph.type as "website",
+    locale: metadataInfo.openGraph.locale,
   },
 };
 

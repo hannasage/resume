@@ -1,0 +1,23 @@
+{
+  "title": "Hanna Sage - Software Engineer & AI Enthusiast",
+  "description": "Creative technologist with 5+ years building scalable systems and leading teams. Currently expanding AI/ML expertise in Baltimore, Maryland.",
+  "keywords": [
+    "Software Engineer",
+    "AI", 
+    "Machine Learning",
+    "Full Stack",
+    "React",
+    "Python",
+    "Baltimore"
+  ],
+  "author": "Hanna Sage",
+  "openGraph": {
+    "title": "Hanna Sage - Software Engineer & AI Enthusiast",
+    "description": "Creative technologist with 5+ years building scalable systems and leading teams.",
+    "type": "website",
+    "locale": "en_US"
+  },
+  "footer": {
+    "copyright": "2025 Hanna Sage. All rights reserved."
+  }
+}

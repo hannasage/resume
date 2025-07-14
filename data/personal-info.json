@@ -1,0 +1,29 @@
+{
+  "name": "Hanna Sage",
+  "title": "Software Engineer & AI Enthusiast",
+  "location": "Baltimore, Maryland",
+  "email": "sagemac.ext@gmail.com",
+  "linkedin": "https://linkedin.com/in/hannasage",
+  "typewriterWords": [
+    "Software Engineer",
+    "AI Enthusiast", 
+    "Creative Technologist",
+    "Full-Stack Developer",
+    "Cloud Architect"
+  ],
+  "heroDescription": "5+ years building scalable systems and leading teams. Currently expanding AI/ML expertise.",
+  "about": {
+    "paragraphs": [
+      "Creative and technically adept Software Engineer with a passion for building innovative solutions that bridge the gap between complex technical challenges and user-friendly experiences.",
+      "With over 5 years of full-stack development experience, I specialize in cloud-based application modernization and AI-integrated systems. My background uniquely combines engineering expertise with business analysis and media production, enabling me to approach problems from multiple perspectives.",
+      "Currently focused on expanding my machine learning certifications and deepening my expertise in AI integration, I'm passionate about leveraging technology to create meaningful impact."
+    ],
+    "highlights": [
+      "5+ years full-stack development",
+      "Cloud-based application modernization", 
+      "AI-integrated systems expertise",
+      "Team leadership and mentoring",
+      "Engineering + Business + Media background"
+    ]
+  }
+}
