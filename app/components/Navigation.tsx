@@ -84,7 +84,7 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <motion.div 
-            className="text-2xl font-bold text-black dark:text-white"
+            className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 dark:from-lime-400 dark:to-green-400 bg-clip-text text-transparent"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}

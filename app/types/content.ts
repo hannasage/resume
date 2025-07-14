@@ -76,6 +76,22 @@ export interface NavigationData {
   };
 }
 
+export interface SideProject {
+  id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  liveUrl?: string;
+  githubUrl?: string | null;
+  featured: boolean;
+}
+
+export interface SideProjectsData {
+  title: string;
+  subtitle: string;
+  projects: SideProject[];
+}
+
 export interface MetadataInfo {
   title: string;
   description: string;

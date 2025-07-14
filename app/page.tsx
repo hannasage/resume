@@ -6,8 +6,8 @@ import { ChevronDown, Mail, Linkedin, MapPin } from 'lucide-react';
 import NetworkVisualization from './components/NetworkVisualization';
 import Navigation from './components/Navigation';
 import { Typewriter } from 'react-simple-typewriter';
-import { Card, Button, AnimatedSection, SkillTag, TimelineItem } from './components/ui';
-import { getPersonalInfo, getSkillsData, getExperienceData, getMetadataInfo } from './lib/content-loader';
+import { Card, Button, AnimatedSection, SkillTag, TimelineItem, ProjectCard } from './components/ui';
+import { getPersonalInfo, getSkillsData, getExperienceData, getMetadataInfo, getSideProjectsData } from './lib/content-loader';
 
 // Form validation schema
 // const contactSchema = z.object({
@@ -26,6 +26,7 @@ export default function Home() {
   const personalInfo = getPersonalInfo();
   const skillsData = getSkillsData();
   const experienceData = getExperienceData();
+  const sideProjectsData = getSideProjectsData();
 
   // Form functionality temporarily disabled
   // const {
@@ -40,7 +41,7 @@ export default function Home() {
   // Navigation scroll handling
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'skills', 'experience', 'contact'];
+      const sections = ['about', 'skills', 'experience', 'projects', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -237,6 +238,29 @@ export default function Home() {
             
             {experienceData.jobs.map((job, index) => (
               <TimelineItem key={job.id} job={job} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Side Projects Section */}
+      <section id="projects" className="py-20">
+        <div className="w-full max-w-full sm:max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-accent-gradient">{sideProjectsData.title}</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-400">{sideProjectsData.subtitle}</p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {sideProjectsData.projects.map((project, index) => (
+              <AnimatedSection
+                key={project.id}
+                delay={index * 0.1}
+                duration={0.6}
+                className="h-full"
+              >
+                <ProjectCard project={project} />
+              </AnimatedSection>
             ))}
           </div>
         </div>

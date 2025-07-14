@@ -8,9 +8,10 @@ module.exports = {
   ],
   darkMode: 'class',
   safelist: [
-    // Gradient backgrounds for skill tags
-    'bg-gradient-to-r',
+    // Gradient backgrounds for skill tags and brand name
+    'bg-gradient-to-r', 'bg-clip-text', 'text-transparent',
     'from-blue-100', 'to-sky-100', 'from-blue-500', 'to-cyan-400',
+    'from-lime-400', 'to-green-400',
     'from-amber-100', 'to-yellow-100', 'from-amber-400', 'to-yellow-300',
     'from-emerald-100', 'to-green-100', 'from-emerald-400', 'to-green-300',
     'from-purple-100', 'to-violet-100', 'from-purple-400', 'to-pink-400',
