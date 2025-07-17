@@ -8,6 +8,7 @@ import Navigation from './components/Navigation';
 import { Typewriter } from 'react-simple-typewriter';
 import { Card, Button, AnimatedSection, SkillTag, TimelineItem, ProjectCard } from './components/ui';
 import { getPersonalInfo, getSkillsData, getExperienceData, getMetadataInfo, getSideProjectsData } from './lib/content-loader';
+import { getColorForText } from './utils/colorUtils';
 
 // Form validation schema
 // const contactSchema = z.object({
@@ -207,7 +208,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-black dark:text-white mb-4">{category.title}</h3>
                   <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill) => {
-                      const colorConfig = skillsData.colorMap[skill.color];
+                      const colorConfig = getColorForText(skill.name);
                       return (
                         <SkillTag
                           key={skill.name}
