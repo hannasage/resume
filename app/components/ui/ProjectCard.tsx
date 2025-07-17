@@ -5,19 +5,13 @@ import { SideProject } from '../../types/content';
 import Card from './Card';
 import Button from './Button';
 import SkillTag from './SkillTag';
+import { getColorForText } from '../../utils/colorUtils';
 
 interface ProjectCardProps {
   project: SideProject;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const techColors = [
-    { light: "bg-gradient-to-r from-blue-100 to-sky-100 text-blue-800 border border-blue-200", dark: "bg-gradient-to-r from-blue-500 to-cyan-400 text-white border border-blue-400" },
-    { light: "bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-800 border border-emerald-200", dark: "bg-gradient-to-r from-emerald-400 to-green-300 text-gray-900 border border-emerald-300" },
-    { light: "bg-gradient-to-r from-purple-100 to-violet-100 text-purple-800 border border-purple-200", dark: "bg-gradient-to-r from-purple-400 to-pink-400 text-white border border-purple-300" },
-    { light: "bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-800 border border-amber-200", dark: "bg-gradient-to-r from-amber-400 to-yellow-300 text-gray-900 border border-amber-300" },
-    { light: "bg-gradient-to-r from-pink-100 to-rose-100 text-pink-800 border border-pink-200", dark: "bg-gradient-to-r from-pink-400 to-rose-400 text-white border border-pink-300" }
-  ];
 
   return (
     <Card className="h-full flex flex-col">
@@ -36,8 +30,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </p>
         
         <div className="flex flex-wrap gap-2 mb-6">
-          {project.technologies.map((tech, index) => {
-            const colorConfig = techColors[index % techColors.length];
+          {project.technologies.map((tech) => {
+            const colorConfig = getColorForText(tech);
             return (
               <SkillTag
                 key={tech}
