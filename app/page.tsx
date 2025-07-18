@@ -101,7 +101,7 @@ export default function Home() {
             {/* Left side - Text content */}
             <div className="flex flex-col justify-center text-center lg:text-left">
               <motion.h1 
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-black dark:text-white mb-4"
+                className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-black dark:text-white mb-4"
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2, duration: 0.8 }}
