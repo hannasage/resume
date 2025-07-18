@@ -28,6 +28,9 @@ export default function Home() {
   const skillsData = getSkillsData();
   const experienceData = getExperienceData();
   const sideProjectsData = getSideProjectsData();
+  
+  // Get featured project
+  const featuredProject = sideProjectsData.projects.find(project => project.featured);
 
   // Form functionality temporarily disabled
   // const {
@@ -93,55 +96,81 @@ export default function Home() {
           <NetworkVisualization className="w-full h-full" />
         </div>
 
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-screen">
+            {/* Left side - Text content */}
+            <div className="flex flex-col justify-center text-center lg:text-left">
+              <motion.h1 
+                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-black dark:text-white mb-4"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+              >
+                {personalInfo.name},
+                <br />
+                <span className="text-black dark:text-white">
+                  <Typewriter
+                    words={personalInfo.typewriterWords}
+                    loop={0}
+                    cursor
+                    cursorStyle="|"
+                    typeSpeed={70}
+                    deleteSpeed={50}
+                    delaySpeed={1500}
+                  />
+                </span>
+              </motion.h1>
+              
+              <motion.div 
+                className="text-lg text-gray-600 dark:text-gray-400 mb-8"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              >
+                <p className="mb-2">📍 {personalInfo.location}</p>
+                <p><b>{personalInfo.heroDescription}</b></p>
+              </motion.div>
+              
+              <motion.div 
+                className="flex justify-center lg:justify-start"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+                <Button onClick={() => scrollToSection('experience')}>
+                  View My Work
+                </Button>
+              </motion.div>
+            </div>
 
-        <div className="w-full flex flex-col items-center justify-center relative z-10 text-center max-w-[80vw] md:max-w-[60vw] lg:max-w-[50vw] xl:max-w-[55vw] mx-auto">
-          <motion.h1 
-            className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black dark:text-white mb-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
-            {personalInfo.name},
-            <br />
-            <span className="ml-2 text-black dark:text-white">
-              <Typewriter
-                words={personalInfo.typewriterWords}
-                loop={0}
-                cursor
-                cursorStyle="|"
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1500}
-              />
-            </span>
-          </motion.h1>
-          <motion.h2 
-            className="text-2xl lg:text-3xl text-gray-600 dark:text-gray-400 mb-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
-            {/* Optionally keep a subtitle here or remove */}
-          </motion.h2>
-          <motion.div 
-            className="text-lg text-gray-600 dark:text-gray-400 mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
-            <p className="mb-2">📍 {personalInfo.location}</p>
-            <p><b>{personalInfo.heroDescription}</b></p>
-          </motion.div>
-          <motion.div 
-            className="flex justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
-            <Button onClick={() => scrollToSection('experience')}>
-              View My Work
-            </Button>
-          </motion.div>
+            {/* Right side - Featured project */}
+            {featuredProject && (
+              <div className="hidden lg:flex flex-col justify-center lg:items-end">
+                <motion.div
+                  className="max-w-md w-full"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.8, duration: 0.8 }}
+                >
+                  <ProjectCard project={featuredProject} />
+                </motion.div>
+                <motion.p
+                  className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center lg:text-right"
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.0, duration: 0.8 }}
+                >
+                  see more{" "}
+                  <button
+                    onClick={() => scrollToSection('projects')}
+                    className="text-accent-gradient hover:underline cursor-pointer"
+                  >
+                    projects
+                  </button>
+                </motion.p>
+              </div>
+            )}
+          </div>
         </div>
         <motion.div 
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
