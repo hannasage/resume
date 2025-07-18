@@ -9,12 +9,15 @@ import { getColorForText } from '../../utils/colorUtils';
 
 interface ProjectCardProps {
   project: SideProject;
+  accentBackground?: boolean;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, accentBackground = false }: ProjectCardProps) {
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card 
+      className={`h-full flex flex-col ${accentBackground ? 'glass' : ''}`}
+    >
       <div className="flex-1">
         <div className="flex items-start justify-between mb-4 gap-3">
           <h3 className="text-xl font-bold text-black dark:text-white flex-1">{project.title}</h3>

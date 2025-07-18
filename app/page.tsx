@@ -152,7 +152,7 @@ export default function Home() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.8, duration: 0.8 }}
                 >
-                  <ProjectCard project={featuredProject} />
+                  <ProjectCard project={featuredProject} accentBackground={true} />
                 </motion.div>
                 <motion.p
                   className="text-sm text-gray-500 dark:text-gray-400 mt-2 text-center lg:text-right"
