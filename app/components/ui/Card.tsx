@@ -8,10 +8,12 @@ interface CardProps {
 }
 
 export default function Card({ children, className = '', style, hover = true }: CardProps) {
+  const hasGlass = className.includes('glass');
+  
   return (
     <div 
       className={`p-6 rounded-lg shadow-lg ${hover ? 'hover:shadow-xl' : ''} transition-shadow duration-300 ${className}`}
-      style={{ backgroundColor: 'var(--color-background)', ...style }}
+      style={hasGlass ? style : { backgroundColor: 'var(--color-background)', ...style }}
     >
       {children}
     </div>
