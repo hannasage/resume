@@ -42,7 +42,7 @@
         { "name": "LangChain", "color": "purple" },
         { "name": "LlamaIndex", "color": "pink" },
         { "name": "Hugging Face Transformers", "color": "amber" },
-        { "name": "OpenAI API", "color": "blue" },
+        { "name": "OpenAI Agents", "color": "blue" },
         { "name": "Model Context Protocol", "color": "emerald" },
         { "name": "Pandas", "color": "orange" },
         { "name": "NumPy", "color": "cyan" }
