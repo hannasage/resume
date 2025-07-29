@@ -6,16 +6,16 @@
       "id": "vinyl-collection",
       "title": "AI-Powered Vinyl Collection",
       "description": "This is my personal vinyl collection, managed by AI to keep track of albums, artists, and release dates. Browse through the catalog to explore what's on the shelves and discover new music.",
-      "technologies": ["Next.js", "Supabase", "OpenAI"],
-      "liveUrl": "https://vinyl.hannasage.love/",
-      "githubUrl": "https://github.com/hannasage/vinyl-db",
+      "technologies": ["TypeScript","Next.js", "Supabase", "OpenAI Agents"],
+      "liveUrl": "https://music.hannasage.love/",
+      "githubUrl": "https://github.com/hannasage/music-central",
       "featured": false
     },
     {
       "id": "spotify-agent",
       "title": "Spotify Agent",
       "description": "An intelligent agent that interacts with the Spotify API to provide personalized music recommendations and playlist management.",
-      "technologies": ["OpenAI Agents", "TypesScript", "Model Context Protocol", "CI/CD"],
+      "technologies": ["TypeScript", "OpenAI Agents", "Model Context Protocol"],
       "liveUrl": null,
       "githubUrl": "https://github.com/hannasage/spotify-agent",
       "featured": true
