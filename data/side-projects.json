@@ -3,6 +3,15 @@
   "subtitle": "Personal experiments and passion projects",
   "projects": [
     {
+      "id": "financial-projections",
+      "title": "Projection — Financial Scenario Planner",
+      "description": "An offline-first personal finance scenario planner. Compare cash, debt balances, investments, and net worth across alternate plans with a deterministic month-step simulation engine. Free and open source.",
+      "technologies": ["TypeScript", "React", "Vite", "Zustand", "Recharts", "PocketBase"],
+      "liveUrl": "https://plan.hannasage.love/",
+      "githubUrl": "https://github.com/hannasage/financial-projections",
+      "featured": true
+    },
+    {
       "id": "vinyl-collection",
       "title": "AI-Powered Vinyl Collection",
       "description": "This is my personal vinyl collection, managed by AI to keep track of albums, artists, and release dates. Browse through the catalog to explore what's on the shelves and discover new music.",
@@ -18,7 +27,7 @@
       "technologies": ["TypeScript", "OpenAI Agents", "Model Context Protocol"],
       "liveUrl": null,
       "githubUrl": "https://github.com/hannasage/spotify-agent",
-      "featured": true
+      "featured": false
     }
   ]
 }

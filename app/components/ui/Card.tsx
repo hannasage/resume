@@ -5,15 +5,25 @@ interface CardProps {
   className?: string;
   style?: React.CSSProperties;
   hover?: boolean;
+  padding?: 'sm' | 'md' | 'lg';
 }
 
-export default function Card({ children, className = '', style, hover = true }: CardProps) {
-  const hasGlass = className.includes('glass');
-  
+export default function Card({
+  children,
+  className = '',
+  style,
+  hover = true,
+  padding = 'md',
+}: CardProps) {
+  const pad =
+    padding === 'sm' ? 'p-4' : padding === 'lg' ? 'p-8' : 'p-5 sm:p-6';
+
   return (
-    <div 
-      className={`p-6 rounded-lg shadow-lg ${hover ? 'hover:shadow-xl' : ''} transition-shadow duration-300 ${className}`}
-      style={hasGlass ? style : { backgroundColor: 'var(--color-background)', ...style }}
+    <div
+      className={`panel ${pad} transition-colors duration-200 ${
+        hover ? 'hover:border-hairline-strong' : ''
+      } ${className}`}
+      style={style}
     >
       {children}
     </div>

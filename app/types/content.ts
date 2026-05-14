@@ -37,6 +37,15 @@ export interface Achievement {
   text: string;
 }
 
+export interface ClientProject {
+  id: string;
+  name: string;
+  client: string;
+  summary: string;
+  technologies: string[];
+  url?: string | null;
+}
+
 export interface Job {
   id: string;
   title: string;
@@ -44,6 +53,8 @@ export interface Job {
   period: string;
   location: string;
   achievements: string[];
+  /** Client-facing products shipped in this role (shown as compact cards). */
+  clientProjects?: ClientProject[];
 }
 
 export interface ExperienceData {

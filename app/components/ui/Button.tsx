@@ -2,35 +2,40 @@ import { ReactNode, ButtonHTMLAttributes } from 'react';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'social';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'social';
   size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
 
-export default function Button({ 
-  children, 
-  variant = 'primary', 
+export default function Button({
+  children,
+  variant = 'primary',
   size = 'md',
   className = '',
-  ...props 
+  ...props
 }: ButtonProps) {
-  const baseClasses = 'font-semibold transition-all duration-200 rounded-lg';
-  
-  const variantClasses = {
-    primary: 'bg-accent-gradient text-white hover:opacity-90',
-    secondary: 'border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-gray-400 dark:hover:border-gray-500',
-    social: 'rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'
+  const base =
+    'inline-flex items-center justify-center gap-2 font-mono font-medium uppercase tracking-widest2 transition-colors duration-150 rounded-sm border';
+
+  const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
+    primary: 'btn-primary-cta',
+    secondary: 'btn-secondary-cta',
+    ghost:
+      'bg-transparent border-transparent text-ink-dim hover:text-accent',
+    social:
+      'rounded-full p-2 border-transparent text-ink-dim hover:text-accent hover:border-hairline-strong',
   };
-  
-  const sizeClasses = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-3 text-lg'
+
+  const sizes: Record<NonNullable<ButtonProps['size']>, string> = {
+    sm: 'px-3 py-1.5 text-[11px]',
+    md: 'px-4 py-2 text-[12px]',
+    lg: 'px-5 py-2.5 text-[13px]',
   };
-  
-  const classes = variant === 'social' 
-    ? `${variantClasses[variant]} ${className}`
-    : `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+
+  const classes =
+    variant === 'social'
+      ? `${variants[variant]} ${className}`
+      : `${base} ${variants[variant]} ${sizes[size]} ${className}`;
 
   return (
     <button className={classes} {...props}>

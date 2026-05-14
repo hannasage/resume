@@ -1,74 +1,111 @@
 'use client';
 
-import { ExternalLink, Github } from 'lucide-react';
+import { ArrowUpRight, Github } from 'lucide-react';
 import { SideProject } from '../../types/content';
-import Card from './Card';
-import Button from './Button';
 import SkillTag from './SkillTag';
-import { getColorForText } from '../../utils/colorUtils';
 
 interface ProjectCardProps {
   project: SideProject;
+  /** When true, render the card in a featured / hero treatment. */
   accentBackground?: boolean;
+  /** Optional short scenario-style metadata strip (e.g. ["open source", "v1"]). */
+  meta?: string[];
 }
 
-export default function ProjectCard({ project, accentBackground = false }: ProjectCardProps) {
-
+export default function ProjectCard({
+  project,
+  accentBackground = false,
+  meta,
+}: ProjectCardProps) {
   return (
-    <Card 
-      className={`h-full flex flex-col ${accentBackground ? 'glass' : ''}`}
+    <article
+      className={`group panel h-full flex flex-col transition-colors duration-200 ${
+        accentBackground ? '' : 'hover:border-hairline-strong'
+      }`}
+      style={
+        accentBackground
+          ? {
+              borderColor: 'var(--color-accent)',
+              background:
+                'linear-gradient(180deg, var(--color-accent-soft) 0%, var(--color-panel) 60%)',
+            }
+          : undefined
+      }
     >
-      <div className="flex-1">
-        <div className="flex items-start justify-between mb-4 gap-3">
-          <h3 className="text-xl font-bold text-black dark:text-white flex-1">{project.title}</h3>
-          {project.featured && (
-            <span className="px-3 py-1 text-xs font-medium rounded-full bg-gradient-to-r from-orange-100 to-red-100 text-orange-800 dark:from-orange-400 dark:to-red-400 dark:text-white border border-orange-200 dark:border-orange-300 flex-shrink-0">
-              Featured
+      <header className="px-5 pt-5 pb-3 flex items-start justify-between gap-3 border-b hairline">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 mb-2">
+            <span
+              aria-hidden
+              className="inline-block w-1.5 h-1.5 rounded-full"
+              style={{ background: 'var(--color-accent)' }}
+            />
+            <span className="eyebrow">
+              {project.featured ? 'Featured project' : 'Project'}
             </span>
-          )}
+          </div>
+          <h3 className="font-display text-lg sm:text-xl font-bold leading-tight tracking-tightish text-ink">
+            {project.title}
+          </h3>
         </div>
-        
-        <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open ${project.title} live`}
+            className="flex-shrink-0 mt-1 text-ink-dim hover:text-accent transition-colors"
+          >
+            <ArrowUpRight className="w-5 h-5" />
+          </a>
+        )}
+      </header>
+
+      <div className="px-5 py-4 flex-1 flex flex-col">
+        <p className="text-ink-dim text-[13.5px] leading-relaxed mb-4">
           {project.description}
         </p>
-        
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.technologies.map((tech) => {
-            const colorConfig = getColorForText(tech);
-            return (
-              <SkillTag
-                key={tech}
-                skill={{ name: tech, color: 'blue' }}
-                colorConfig={colorConfig}
-              />
-            );
-          })}
+
+        <div className="flex flex-wrap gap-1.5 mt-auto">
+          {project.technologies.map((tech) => (
+            <SkillTag key={tech} skill={{ name: tech, color: 'mono' }} />
+          ))}
         </div>
       </div>
-      
-      <div className="flex items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-        {project.liveUrl && (
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => window.open(project.liveUrl, '_blank')}
-            className="flex items-center gap-2"
-          >
-            <ExternalLink className="w-4 h-4" />
-            Live Demo
-          </Button>
-        )}
-        
-        {project.githubUrl && (
-          <Button
-            variant="social"
-            onClick={() => window.open(project.githubUrl!, '_blank')}
-            aria-label="View source code"
-          >
-            <Github className="w-4 h-4 text-gray-700 dark:text-gray-300" />
-          </Button>
-        )}
-      </div>
-    </Card>
+
+      <footer className="px-5 py-3 border-t hairline flex items-center justify-between gap-3 text-[11px] uppercase tracking-widest2 text-ink-muted">
+        <div className="flex flex-wrap gap-x-3 gap-y-1">
+          {(meta && meta.length > 0
+            ? meta
+            : [project.liveUrl ? 'live' : 'archived', 'open source']
+          ).map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+        </div>
+        <div className="flex items-center gap-3">
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent transition-colors"
+            >
+              visit ↗
+            </a>
+          )}
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${project.title} source`}
+              className="hover:text-accent transition-colors"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+          )}
+        </div>
+      </footer>
+    </article>
   );
 }

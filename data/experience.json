@@ -1,6 +1,6 @@
 {
   "title": "Professional Experience",
-  "subtitle": "Building impactful solutions across diverse domains",
+  "subtitle": "Product delivery across public-sector and health tech",
   "jobs": [
     {
       "id": "fearless-se2",
@@ -14,6 +14,24 @@
         "Translated federal policy into compliant, accessible UI workflows",
         "Optimized agile delivery cycles and drove CI/CD process improvements for better quality assurance",
         "Mentored junior engineers across development teams"
+      ],
+      "clientProjects": [
+        {
+          "id": "macpro-cms",
+          "name": "MACPRO",
+          "client": "CMS",
+          "summary": "Medicaid and Medicare program operations tooling for the Centers for Medicare & Medicaid Services—accessible React front ends and delivery practices on work led by Fearless, aligned with federal policy and state partner needs.",
+          "technologies": ["React", "TypeScript", "Federal UX", "CI/CD", "Accessibility"],
+          "url": "https://www.cms.gov"
+        },
+        {
+          "id": "searchable-museum",
+          "name": "Searchable Museum",
+          "client": "Smithsonian Institution",
+          "summary": "Public discovery experience across Smithsonian collections—performance, content modeling, and inclusive UX so visitors can search and explore millions of catalogued objects and narratives.",
+          "technologies": ["Gatsby", "React", "Craft CMS", "AWS", "OpenAI API"],
+          "url": "https://www.si.edu"
+        }
       ]
     },
     {
@@ -28,6 +46,16 @@
         "Implemented test-driven development with Jest and RTL",
         "Streamlined onboarding of new engineers",
         "Played a key role in agile ceremonies and collaborated with stakeholders on roadmap alignment"
+      ],
+      "clientProjects": [
+        {
+          "id": "reportstream-cdc",
+          "name": "ReportStream",
+          "client": "CDC",
+          "summary": "CDC-led data hub that routes electronic lab reporting (ELR) and other public health messages between health departments, labs, and federal systems—Fearless contributes engineering to the open, standards-based platform.",
+          "technologies": ["React", "TypeScript", "Kotlin", "Azure Functions", "Jest", "RTL"],
+          "url": "https://reportstream.cdc.gov"
+        }
       ]
     },
     {

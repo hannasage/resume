@@ -21,11 +21,12 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error] = useState<string | null>(null);
-  const { effectiveTheme } = useTheme();
+  const { theme } = useTheme();
+  const isLight = !theme.isDark;
   // const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log('NetworkVisualization useEffect triggered with theme:', effectiveTheme);
+    console.log('NetworkVisualization useEffect triggered with theme:', theme.id);
     
     if (!containerRef.current) {
       console.log('Container ref not available');
@@ -150,16 +151,16 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
       
       if (primaryNodes.some(n => n.id === nodeData.id)) {
         size = 1.0;
-        color = effectiveTheme === 'light' ? 0x000000 : 0xF1F5F9; // Black in light, light in dark
+        color = isLight ? 0x000000 : 0xF1F5F9; // Black in light, light in dark
       } else if (secondaryNodes.some(n => n.id === nodeData.id)) {
         size = 0.7;
-        color = effectiveTheme === 'light' ? 0x000000 : 0xCBD5E1; // Black in light, medium light in dark
+        color = isLight ? 0x000000 : 0xCBD5E1; // Black in light, medium light in dark
       } else if (tertiaryNodes.some(n => n.id === nodeData.id)) {
         size = 0.5;
-        color = effectiveTheme === 'light' ? 0x000000 : 0x94A3B8; // Black in light, medium gray in dark
+        color = isLight ? 0x000000 : 0x94A3B8; // Black in light, medium gray in dark
       } else {
         size = 0.4;
-        color = effectiveTheme === 'light' ? 0x000000 : 0x64748B; // Black in light, dark gray in dark
+        color = isLight ? 0x000000 : 0x64748B; // Black in light, dark gray in dark
       }
       
       const geometry = new THREE.SphereGeometry(size, 16, 16);
@@ -205,12 +206,12 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
         ]);
         
         // Theme-aware line color
-        const lineColor = effectiveTheme === 'light' ? 0xEA580C : 0x93C5FD; // Burnt orange in light, light blue in dark
+        const lineColor = isLight ? 0xEA580C : 0x93C5FD; // Burnt orange in light, light blue in dark
         
         const material = new THREE.LineBasicMaterial({ 
           color: lineColor,
           transparent: true,
-          opacity: effectiveTheme === 'light' ? 0.4 : 0.3
+          opacity: isLight ? 0.4 : 0.3
         });
         
         const line = new THREE.Line(geometry, material);
@@ -360,7 +361,7 @@ export default function NetworkVisualization({ className = '' }: NetworkVisualiz
       }
       cancelAnimationFrame(animationId);
     };
-  }, [effectiveTheme]);
+  }, [theme.isDark, theme.id, isLight]);
 
 
   return (

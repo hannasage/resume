@@ -1,8 +1,8 @@
 'use client';
 
 import { Job } from '../../types/content';
-import Card from './Card';
 import AnimatedSection from './AnimatedSection';
+import WorkDeliverableCard from './WorkDeliverableCard';
 
 interface TimelineItemProps {
   job: Job;
@@ -10,38 +10,73 @@ interface TimelineItemProps {
 }
 
 export default function TimelineItem({ job, index }: TimelineItemProps) {
-  const isEven = index % 2 === 0;
-  
+  const deliverables = job.clientProjects ?? [];
+
   return (
     <AnimatedSection
-      direction={isEven ? 'left' : 'right'}
-      delay={index * 0.2}
-      className={`relative mb-12 ${
-        isEven ? 'md:pr-8 md:text-right' : 'md:pl-8 md:text-left'
-      }`}
+      direction="up"
+      delay={index * 0.08}
+      className="relative pl-8 sm:pl-10 pb-10 last:pb-0"
     >
-      {/* Timeline dot */}
-      <div className={`absolute top-6 w-4 h-4 bg-black dark:bg-white rounded-full ${
-        isEven ? 'left-2 md:left-auto md:right-[-8px]' : 'left-2 md:left-[-8px]'
-      }`}></div>
-      
-      <div className={`ml-12 md:ml-0 ${
-        isEven ? 'md:mr-8' : 'md:ml-8'
-      }`}>
-        <Card>
-          <h3 className="text-xl font-bold text-black dark:text-white">{job.title}</h3>
-          <p className="text-lg text-gray-600 dark:text-gray-300 font-medium">{job.company}</p>
-          <p className="text-gray-500 dark:text-gray-400 mb-4">{job.period} • {job.location}</p>
-          <ul className="space-y-2 text-left">
-            {job.achievements.map((achievement, achievementIndex) => (
-              <li key={achievementIndex} className="text-gray-700 dark:text-gray-300 flex items-start">
-                <span className="text-black dark:text-white mr-2">•</span>
-                {achievement}
-              </li>
-            ))}
-          </ul>
-        </Card>
+      <span
+        aria-hidden
+        className="absolute left-2 top-3 bottom-0 w-px"
+        style={{ background: 'var(--color-border)' }}
+      />
+      <span
+        aria-hidden
+        className="absolute left-[3px] top-2 w-2.5 h-2.5 rounded-sm"
+        style={{
+          background: 'var(--color-accent)',
+          boxShadow: '0 0 0 3px var(--color-bg)',
+        }}
+      />
+
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-3">
+        <h3 className="font-display text-xl sm:text-2xl font-bold tracking-tightish text-ink">
+          {job.title}
+        </h3>
+        <span className="text-ink-dim text-sm">@ {job.company}</span>
       </div>
+
+      <div className="flex flex-wrap gap-x-3 gap-y-1 mb-4 text-[11px] uppercase tracking-widest2 text-ink-muted">
+        <span>{job.period}</span>
+        <span aria-hidden>·</span>
+        <span>{job.location}</span>
+      </div>
+
+      <ul className="space-y-2 mb-6">
+        {job.achievements.map((achievement, achievementIndex) => (
+          <li
+            key={achievementIndex}
+            className="flex items-start gap-3 text-ink-dim leading-relaxed text-[13.5px]"
+          >
+            <span
+              aria-hidden
+              className="mt-2 inline-block w-1.5 h-1.5 flex-shrink-0"
+              style={{ background: 'var(--color-accent)' }}
+            />
+            <span>{achievement}</span>
+          </li>
+        ))}
+      </ul>
+
+      {deliverables.length > 0 && (
+        <div>
+          <p className="text-[10px] font-mono uppercase tracking-widest2 text-ink-muted mb-2">
+            Selected deliveries
+          </p>
+          <div
+            className={`grid gap-2 ${
+              deliverables.length > 1 ? 'sm:grid-cols-2' : 'grid-cols-1'
+            }`}
+          >
+            {deliverables.map((d) => (
+              <WorkDeliverableCard key={d.id} deliverable={d} />
+            ))}
+          </div>
+        </div>
+      )}
     </AnimatedSection>
   );
 }
