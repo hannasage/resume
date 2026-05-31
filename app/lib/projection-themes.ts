@@ -146,7 +146,7 @@ export const THEMES: Theme[] = [
     isDark: true,
     colors: {
       bg: '#0e0620', surface: '#180d38', faint: '#130a2c', border: '#2e1060',
-      text: '#f5eaff', muted: '#a080cc', accent: '#ff499e', dim: '#d43c8a',
+      text: '#f5eaff', muted: '#a080cc', accent: '#ff499e', dim: '#e563aa',
       blue: '#779be7', orange: '#fb8500', red: '#ff2060', purple: '#a480cf',
       textOnAccent: '#0e0620',
     },

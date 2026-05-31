@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, Syne } from "next/font/google";
 import "./globals.css";
+import "@hannasage/projection-ui/tokens";
 import { ThemeProvider } from "./context/ThemeContext";
 import { getMetadataInfo } from "./lib/content-loader";
 

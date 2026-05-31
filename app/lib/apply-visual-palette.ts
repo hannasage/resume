@@ -64,4 +64,22 @@ export function applyVisualPalette(colors: ThemeColors, isDark: boolean) {
     '--color-accent-gradient',
     `linear-gradient(135deg, ${c.accent}, ${c.dim})`
   );
+
+  // Bridge to @hannasage/projection-ui CSS vars so library components
+  // (Badge, Card, Button, etc.) pick up the active theme automatically.
+  // These are also set on party-mode frames so library components cycle colors too.
+  set('--ui-bg',         c.bg);
+  set('--ui-surface',    c.surface);
+  set('--ui-border',     c.border);
+  set('--ui-text',       c.text);
+  set('--ui-muted',      c.muted);
+  set('--ui-primary',    c.accent);
+  set('--ui-primary-fg', c.textOnAccent);
+  set('--ui-danger',     c.red);
+  set('--ui-font',       "'IBM Plex Mono', ui-monospace, monospace");
+  // Resume uses sharp/4px radius throughout
+  set('--ui-radius-sm',   '2px');
+  set('--ui-radius-md',   '4px');
+  set('--ui-radius-lg',   '6px');
+  set('--ui-radius-full', '9999px');
 }

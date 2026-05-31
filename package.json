@@ -10,6 +10,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@hannasage/projection-ui": "^0.1.5",
     "@hookform/resolvers": "^5.1.1",
     "@types/three": "^0.178.1",
     "framer-motion": "^12.23.3",
@@ -18,9 +22,12 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.60.0",
+    "react-is": "^19.2.6",
     "react-simple-typewriter": "^5.0.1",
+    "recharts": "^3.8.1",
     "three": "^0.178.0",
-    "zod": "^4.0.5"
+    "zod": "^4.0.5",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

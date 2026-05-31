@@ -9,10 +9,10 @@ import {
   Card,
   Button,
   AnimatedSection,
-  SkillTag,
   TimelineItem,
   ProjectCard,
 } from './components/ui';
+import { Badge } from '@hannasage/projection-ui';
 import {
   getPersonalInfo,
   getSkillsData,
@@ -81,6 +81,8 @@ export default function Home() {
         activeSection={activeSection}
         scrollToSection={scrollToSection}
       />
+
+      <main>
 
       {/* Hero */}
       <section
@@ -162,7 +164,7 @@ export default function Home() {
                   {personalInfo.location}
                 </span>
                 <span aria-hidden>·</span>
-                <span>5+ years experience</span>
+                <span>7+ years experience</span>
               </motion.div>
 
               <motion.div
@@ -189,7 +191,7 @@ export default function Home() {
                 transition={{ delay: 0.65, duration: 0.7 }}
               >
                 {[
-                  { k: 'Tenure', v: '5+ yr' },
+                  { k: 'Tenure', v: '7+ yr' },
                   { k: 'Focus', v: 'Full-stack' },
                   { k: 'Status', v: 'Open' },
                 ].map((s) => (
@@ -226,7 +228,7 @@ export default function Home() {
                     see all ↘
                   </button>
                 </div>
-                <ProjectCard project={featuredProject} accentBackground />
+                <ProjectCard project={featuredProject} accentBackground headingLevel={2} />
               </motion.div>
             )}
           </div>
@@ -339,7 +341,13 @@ export default function Home() {
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {category.skills.map((skill) => (
-                      <SkillTag key={skill.name} skill={skill} />
+                      <Badge
+                        key={skill.name}
+                        className="tracking-widest2"
+                        style={{ letterSpacing: '0.2em' }}
+                      >
+                        {skill.name}
+                      </Badge>
                     ))}
                   </div>
                 </Card>
@@ -503,6 +511,8 @@ export default function Home() {
           </AnimatedSection>
         </div>
       </section>
+
+      </main>
 
       {/* ============================================================
           FOOTER

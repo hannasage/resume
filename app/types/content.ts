@@ -90,6 +90,7 @@ export interface NavigationData {
 export interface SideProject {
   id: string;
   title: string;
+  subtitle?: string;
   description: string;
   technologies: string[];
   liveUrl?: string;

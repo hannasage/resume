@@ -10,13 +10,17 @@ interface ProjectCardProps {
   accentBackground?: boolean;
   /** Optional short scenario-style metadata strip (e.g. ["open source", "v1"]). */
   meta?: string[];
+  /** Heading level for the project title. Defaults to 3 (under a section h2). Use 2 when the card appears directly under the page h1. */
+  headingLevel?: 2 | 3;
 }
 
 export default function ProjectCard({
   project,
   accentBackground = false,
   meta,
+  headingLevel = 3,
 }: ProjectCardProps) {
+  const Heading = `h${headingLevel}` as 'h2' | 'h3';
   return (
     <article
       className={`group panel h-full flex flex-col transition-colors duration-200 ${
@@ -44,9 +48,15 @@ export default function ProjectCard({
               {project.featured ? 'Featured project' : 'Project'}
             </span>
           </div>
-          <h3 className="font-display text-lg sm:text-xl font-bold leading-tight tracking-tightish text-ink">
+          <Heading className="font-display text-lg sm:text-xl font-bold leading-tight tracking-tightish text-ink">
             {project.title}
-          </h3>
+          </Heading>
+          {project.subtitle && (
+            <p className="font-mono text-[12px] font-medium tracking-widest2 uppercase mt-1"
+               style={{ color: 'var(--color-accent)' }}>
+              {project.subtitle}
+            </p>
+          )}
         </div>
         {project.liveUrl && (
           <a

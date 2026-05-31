@@ -4,7 +4,8 @@
   "projects": [
     {
       "id": "financial-projections",
-      "title": "Projection — Financial Scenario Planner",
+      "title": "Projection",
+      "subtitle": "Financial Scenario Planner",
       "description": "An offline-first personal finance scenario planner. Compare cash, debt balances, investments, and net worth across alternate plans with a deterministic month-step simulation engine. Free and open source.",
       "technologies": ["TypeScript", "React", "Vite", "Zustand", "Recharts", "PocketBase"],
       "liveUrl": "https://plan.hannasage.love/",
@@ -12,10 +13,21 @@
       "featured": true
     },
     {
+      "id": "projection-ui",
+      "title": "projection-ui",
+      "subtitle": "React Component Library",
+      "description": "A dark-first React component library and design token system extracted from Projection. Consumer-configurable theming via ThemeProvider — no hardcoded themes. Published to npm as @hannasage/projection-ui.",
+      "technologies": ["TypeScript", "React", "Vite", "Storybook", "Recharts", "@dnd-kit"],
+      "liveUrl": null,
+      "githubUrl": "https://github.com/hannasage/projection-ui",
+      "featured": false
+    },
+    {
       "id": "vinyl-collection",
-      "title": "AI-Powered Vinyl Collection",
+      "title": "Music Central",
+      "subtitle": "Music Catalog & Discovery",
       "description": "This is my personal vinyl collection, managed by AI to keep track of albums, artists, and release dates. Browse through the catalog to explore what's on the shelves and discover new music.",
-      "technologies": ["TypeScript","Next.js", "Supabase", "OpenAI Agents"],
+      "technologies": ["TypeScript", "Next.js", "Supabase", "OpenAI Agents"],
       "liveUrl": "https://music.hannasage.love/",
       "githubUrl": "https://github.com/hannasage/music-central",
       "featured": false
@@ -23,6 +35,7 @@
     {
       "id": "spotify-agent",
       "title": "Spotify Agent",
+      "subtitle": "Terminal-based Spotify AI Buddy",
       "description": "An intelligent agent that interacts with the Spotify API to provide personalized music recommendations and playlist management.",
       "technologies": ["TypeScript", "OpenAI Agents", "Model Context Protocol"],
       "liveUrl": null,
