@@ -22,7 +22,7 @@
           "client": "CMS",
           "summary": "Medicaid and Medicare program operations tooling for the Centers for Medicare & Medicaid Services—accessible React front ends and delivery practices on work led by Fearless, aligned with federal policy and state partner needs.",
           "technologies": ["React", "TypeScript", "Federal UX", "CI/CD", "Accessibility"],
-          "url": "https://www.cms.gov"
+          "url": "https://github.com/Enterprise-CMCS/macpro-mako"
         },
         {
           "id": "searchable-museum",
@@ -30,7 +30,7 @@
           "client": "Smithsonian Institution",
           "summary": "Public discovery experience across Smithsonian collections—performance, content modeling, and inclusive UX so visitors can search and explore millions of catalogued objects and narratives.",
           "technologies": ["Gatsby", "React", "Craft CMS", "AWS", "OpenAI API"],
-          "url": "https://www.si.edu"
+          "url": "https://www.searchablemuseum.com/"
         }
       ]
     },
@@ -54,7 +54,7 @@
           "client": "CDC",
           "summary": "CDC-led data hub that routes electronic lab reporting (ELR) and other public health messages between health departments, labs, and federal systems—Fearless contributes engineering to the open, standards-based platform.",
           "technologies": ["React", "TypeScript", "Kotlin", "Azure Functions", "Jest", "RTL"],
-          "url": "https://reportstream.cdc.gov"
+          "url": "https://github.com/CDCgov/prime-reportstream"
         }
       ]
     },

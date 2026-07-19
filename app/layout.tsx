@@ -26,7 +26,11 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: metadataInfo.title,
+  metadataBase: new URL("https://hannasage.love"),
+  title: {
+    default: metadataInfo.title,
+    template: "%s · Hanna Sage",
+  },
   description: metadataInfo.description,
   keywords: metadataInfo.keywords,
   authors: [{ name: metadataInfo.author }],
@@ -35,6 +39,13 @@ export const metadata: Metadata = {
     description: metadataInfo.openGraph.description,
     type: metadataInfo.openGraph.type as "website",
     locale: metadataInfo.openGraph.locale,
+    url: "/",
+    siteName: "Hanna Sage",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: metadataInfo.openGraph.title,
+    description: metadataInfo.openGraph.description,
   },
 };
 
