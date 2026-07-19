@@ -104,6 +104,25 @@ export interface SideProjectsData {
   projects: SideProject[];
 }
 
+export interface Analysis {
+  id: string;
+  title: string;
+  subtitle?: string;
+  description: string;
+  technologies: string[];
+  /** Internal route to the full analysis (e.g. "/brief"). */
+  href: string;
+  /** Optional short metadata strip shown in the card footer. */
+  meta?: string[];
+  featured?: boolean;
+}
+
+export interface AnalysesData {
+  title: string;
+  subtitle: string;
+  analyses: Analysis[];
+}
+
 export interface MetadataInfo {
   title: string;
   description: string;

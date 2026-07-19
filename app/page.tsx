@@ -11,6 +11,7 @@ import {
   AnimatedSection,
   TimelineItem,
   ProjectCard,
+  AnalysisCard,
 } from './components/ui';
 import { Badge } from '@hannasage/projection-ui';
 import {
@@ -19,13 +20,15 @@ import {
   getExperienceData,
   getMetadataInfo,
   getSideProjectsData,
+  getAnalysesData,
 } from './lib/content-loader';
 
 const SECTIONS = [
   { id: 'about', label: 'About' },
   { id: 'skills', label: 'Stack' },
   { id: 'experience', label: 'Work' },
-  { id: 'projects', label: 'Projects' },
+  { id: 'analyses', label: 'Analyses' },
+  { id: 'applications', label: 'Applications' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -36,14 +39,18 @@ export default function Home() {
   const skillsData = getSkillsData();
   const experienceData = getExperienceData();
   const sideProjectsData = getSideProjectsData();
+  const analysesData = getAnalysesData();
   const metadata = getMetadataInfo();
 
   const featuredProject = sideProjectsData.projects.find((p) => p.featured);
   const otherProjects = sideProjectsData.projects.filter((p) => !p.featured);
 
+  const featuredAnalysis = analysesData.analyses.find((a) => a.featured);
+  const otherAnalyses = analysesData.analyses.filter((a) => !a.featured);
+
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['about', 'skills', 'experience', 'projects', 'contact'];
+      const sections = ['about', 'skills', 'experience', 'analyses', 'applications', 'contact'];
       const scrollPosition = window.scrollY + 120;
 
       for (const section of sections) {
@@ -222,7 +229,7 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-2 px-1">
                   <span className="eyebrow">Featured project</span>
                   <button
-                    onClick={() => scrollToSection('projects')}
+                    onClick={() => scrollToSection('applications')}
                     className="text-[11px] uppercase tracking-widest2 text-ink-dim hover:text-accent transition-colors"
                   >
                     see all ↘
@@ -385,15 +392,52 @@ export default function Home() {
       </section>
 
       {/* ============================================================
-          PROJECTS
+          ANALYSES
           ============================================================ */}
       <section
-        id="projects"
+        id="analyses"
         className="py-20 sm:py-24"
         style={{
           borderTop: '1px solid var(--color-border)',
           background: 'var(--color-bg-elevated)',
         }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <AnimatedSection className="mb-12">
+            <div className="eyebrow mb-3">Research</div>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tightish text-ink mb-2">
+              {analysesData.title}
+            </h2>
+            <p className="text-ink-dim text-[14px]">
+              {analysesData.subtitle}
+            </p>
+          </AnimatedSection>
+
+          {featuredAnalysis && (
+            <AnimatedSection className="mb-6">
+              <AnalysisCard analysis={featuredAnalysis} accentBackground />
+            </AnimatedSection>
+          )}
+
+          {otherAnalyses.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {otherAnalyses.map((analysis, i) => (
+                <AnimatedSection key={analysis.id} delay={i * 0.08} duration={0.5}>
+                  <AnalysisCard analysis={analysis} />
+                </AnimatedSection>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ============================================================
+          APPLICATIONS (formerly Side Projects)
+          ============================================================ */}
+      <section
+        id="applications"
+        className="py-20 sm:py-24"
+        style={{ borderTop: '1px solid var(--color-border)' }}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <AnimatedSection className="mb-12">

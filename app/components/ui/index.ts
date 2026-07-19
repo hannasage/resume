@@ -4,4 +4,5 @@ export { default as AnimatedSection } from './AnimatedSection';
 export { default as SkillTag } from './SkillTag';
 export { default as TimelineItem } from './TimelineItem';
 export { default as ProjectCard } from './ProjectCard';
+export { default as AnalysisCard } from './AnalysisCard';
 export { default as WorkDeliverableCard } from './WorkDeliverableCard';

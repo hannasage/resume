@@ -4,7 +4,8 @@
     { "id": "about", "label": "About" },
     { "id": "skills", "label": "Skills" },
     { "id": "experience", "label": "Work" },
-    { "id": "projects", "label": "Projects" },
+    { "id": "analyses", "label": "Analyses" },
+    { "id": "applications", "label": "Applications" },
     { "id": "contact", "label": "Contact" }
   ],
   "socialLinks": [
