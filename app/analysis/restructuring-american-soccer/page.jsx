@@ -4,7 +4,8 @@
    RESTRUCTURING AMERICAN SOCCER — A Sage Advice LLC BA Brief · v0.2
    ------------------------------------------------------------
    DROP-IN NOTES for hannasage/resume (Next 15 App Router):
-   1. Save as app/brief/page.tsx — 'use client' is already set;
+   1. Lives at app/analysis/restructuring-american-soccer/page.jsx
+      (route /analysis/restructuring-american-soccer) — 'use client' is set;
       only dependency is recharts (^3.8 installed). React 19 OK.
    2. Fonts: consumes var(--font-syne) / var(--font-plex-mono),
       which app/layout.tsx already loads via next/font. The
@@ -23,8 +24,8 @@ import {
   ResponsiveContainer, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, Legend, PieChart, Pie, Cell, LabelList,
 } from "recharts";
-import { useTheme } from "../context/ThemeContext";
-import { THEMES } from "../lib/projection-themes";
+import { useTheme } from "../../context/ThemeContext";
+import { THEMES } from "../../lib/projection-themes";
 
 /* Themes come from the site's shared 12-theme system (app/lib/projection-themes.ts).
    The App component reads/writes the active theme through ThemeContext, so a change
@@ -1367,15 +1368,15 @@ function PanelFooter({ t, idx, tabs, goTab }) {
 }
 
 /* ------------------------------------------------------------
-   Suggested data/side-projects.json entry:
+   Homepage card is driven by this entry in data/analyses.json:
    {
      "id": "us-soccer-brief",
      "title": "Restructuring American Soccer",
      "subtitle": "Business Analysis Brief · Sage Advice LLC",
      "description": "A sourced 30-year restructuring analysis of the US soccer pyramid — franchise economics, pay-to-play youth, five international case studies, and a phased open-pyramid roadmap with 85 cited sources.",
      "technologies": ["Business Analysis", "React", "Recharts", "projection-ui"],
-     "liveUrl": "https://hannasage.love/brief",
-     "githubUrl": null,
-     "featured": false
+     "href": "/analysis/restructuring-american-soccer",
+     "meta": ["research brief", "85 sources", "v0.2"],
+     "featured": true
    }
    ------------------------------------------------------------ */

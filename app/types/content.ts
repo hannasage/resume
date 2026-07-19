@@ -110,7 +110,7 @@ export interface Analysis {
   subtitle?: string;
   description: string;
   technologies: string[];
-  /** Internal route to the full analysis (e.g. "/brief"). */
+  /** Internal route to the full analysis (e.g. "/analysis/restructuring-american-soccer"). */
   href: string;
   /** Optional short metadata strip shown in the card footer. */
   meta?: string[];

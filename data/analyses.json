@@ -8,7 +8,7 @@
       "subtitle": "Business Analysis Brief · Sage Advice LLC",
       "description": "A sourced 30-year restructuring analysis of the US soccer pyramid — franchise economics, pay-to-play youth, five international case studies, and a phased open-pyramid roadmap with 85 cited sources.",
       "technologies": ["Business Analysis", "React", "Recharts", "projection-ui"],
-      "href": "/brief",
+      "href": "/analysis/restructuring-american-soccer",
       "meta": ["research brief", "85 sources", "v0.2"],
       "featured": true
     }
