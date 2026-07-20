@@ -48,6 +48,18 @@ export default function Home() {
   const featuredAnalysis = analysesData.analyses.find((a) => a.featured);
   const otherAnalyses = analysesData.analyses.filter((a) => !a.featured);
 
+  // Mark that this visitor has been on the resume site during this session.
+  // Standalone analysis pages read this to decide whether to offer a "back to
+  // site" link — shared links opened cold never get one. Not a URL query, so
+  // the shared URL stays clean.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem('sa:fromResume', '1');
+    } catch {
+      /* private mode / storage disabled — no back link, acceptable */
+    }
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = ['about', 'skills', 'experience', 'analyses', 'applications', 'contact'];
