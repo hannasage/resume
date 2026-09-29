@@ -192,6 +192,65 @@ describe("LocalContentSource", () => {
     await expect(source.listPosts("hannasage.love")).rejects.toThrow(/heroImage\.url/);
   });
 
+  it("throws when heroImage.url contains a backslash (single)", async () => {
+    // Single-quoted YAML so the backslash reaches the parser literally,
+    // instead of being read as a double-quoted-string escape sequence.
+    const raw = [
+      "---",
+      'title: "Backslash single"',
+      'excerpt: "e"',
+      "heroImage:",
+      "  url: '/\\evil.example.com/x.jpg'",
+      '  alt: "a"',
+      'publishedAt: "2026-01-01"',
+      "sites:",
+      "  - hannasage.love",
+      'canonicalSite: "hannasage.love"',
+      "---",
+      "Body.",
+    ].join("\n");
+    fs.writeFileSync(path.join(tmpDir, "content", "blog", "backslash-single.md"), raw, "utf8");
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/backslash/i);
+  });
+
+  it("throws when heroImage.url contains a backslash (double)", async () => {
+    const raw = [
+      "---",
+      'title: "Backslash double"',
+      'excerpt: "e"',
+      "heroImage:",
+      "  url: '/\\\\evil.example.com/x.jpg'",
+      '  alt: "a"',
+      'publishedAt: "2026-01-01"',
+      "sites:",
+      "  - hannasage.love",
+      'canonicalSite: "hannasage.love"',
+      "---",
+      "Body.",
+    ].join("\n");
+    fs.writeFileSync(path.join(tmpDir, "content", "blog", "backslash-double.md"), raw, "utf8");
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/backslash/i);
+  });
+
+  it("allows an absolute https URL written without // (https:host)", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "scheme-only.md", {
+      title: "Scheme only",
+      excerpt: "e",
+      heroImage: { url: "https:host", alt: "a" },
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    const posts = await source.listPosts("hannasage.love");
+    expect(posts[0].heroImage.url).toBe("https:host");
+  });
+
   it("throws when the slug contains characters outside [a-z0-9-]", async () => {
     writePost(path.join(tmpDir, "content", "blog"), "bad-slug.md", {
       title: "Bad slug",

@@ -3,8 +3,10 @@ import path from "path";
 import matter from "gray-matter";
 import type { ContentSource, Post } from "./types";
 import { KNOWN_SITES } from "./types";
+import { SITE_URL } from "../site";
 
 const SLUG_PATTERN = /^[a-z0-9-]+$/;
+const SITE_ORIGIN = new URL(SITE_URL).origin;
 
 function contentDir(): string {
   return path.join(process.cwd(), "content", "blog");
@@ -27,7 +29,7 @@ function assertSlug(value: string, file: string): string {
 }
 
 function assertKnownSite(value: string, field: string, file: string): string {
-  if (!(KNOWN_SITES as readonly string[]).includes(value)) {
+  if (!KNOWN_SITES.includes(value)) {
     throw new Error(
       `Post frontmatter in ${file} has an unknown ${field} "${value}". Known sites are: ${KNOWN_SITES.join(", ")}.`,
     );
@@ -36,9 +38,33 @@ function assertKnownSite(value: string, field: string, file: string): string {
 }
 
 function assertHeroImageUrl(value: string, file: string): string {
-  const isHttps = value.startsWith("https://");
-  const isSiteRelative = value.startsWith("/") && !value.startsWith("//");
-  if (!isHttps && !isSiteRelative) {
+  // A backslash is not a path separator in a URL, but the WHATWG URL
+  // parser (and every browser) treats one as equivalent to a forward
+  // slash. "/\evil.example.com/x.jpg" reads as site-relative here but
+  // parses as "//evil.example.com/x.jpg", a protocol-relative URL to a
+  // different origin. Reject it outright rather than try to normalize it.
+  if (value.includes("\\")) {
+    throw new Error(
+      `Post frontmatter in ${file} has an invalid heroImage.url "${value}". A backslash is not allowed.`,
+    );
+  }
+
+  let resolved: URL;
+  let isAbsolute: boolean;
+  try {
+    resolved = new URL(value);
+    isAbsolute = true;
+  } catch {
+    isAbsolute = false;
+    try {
+      resolved = new URL(value, SITE_URL);
+    } catch {
+      throw new Error(`Post frontmatter in ${file} has an invalid heroImage.url "${value}".`);
+    }
+  }
+
+  const valid = isAbsolute ? resolved.protocol === "https:" : resolved.origin === SITE_ORIGIN;
+  if (!valid) {
     throw new Error(
       `Post frontmatter in ${file} has an invalid heroImage.url "${value}". It must be an https:// URL or a path under /public.`,
     );

@@ -29,8 +29,19 @@ export interface HeroImage {
  * A post whose `canonicalSite` is not one of these fails to parse: this
  * blocks a post's frontmatter from steering the canonical URL or an Open
  * Graph image at an arbitrary host.
+ *
+ * `example-brand.example` exists only under Vitest's default
+ * `NODE_ENV=test`, to exercise the multi-site behavior in fixtures. It
+ * is never reachable under `next build` or `next start`
+ * (`NODE_ENV=production`).
  */
-export const KNOWN_SITES = ["hannasage.love", "example-brand.example"] as const;
+const PRODUCTION_KNOWN_SITES = ["hannasage.love"] as const;
+const TEST_ONLY_KNOWN_SITES = ["example-brand.example"] as const;
+
+export const KNOWN_SITES: readonly string[] =
+  process.env.NODE_ENV === "test"
+    ? [...PRODUCTION_KNOWN_SITES, ...TEST_ONLY_KNOWN_SITES]
+    : PRODUCTION_KNOWN_SITES;
 
 export interface Post {
   slug: string;
