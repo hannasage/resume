@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Github, Linkedin, Menu, X } from 'lucide-react';
 import ThemeSelector from './ThemeSelector';
 import { getNavigationData } from '../lib/content-loader';
@@ -13,6 +15,8 @@ interface NavigationProps {
 export default function Navigation({ activeSection, scrollToSection }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
+  const pathname = usePathname();
+  const isBlogActive = pathname === '/blog' || pathname.startsWith('/blog/');
 
   const navigationData = getNavigationData();
 
@@ -67,6 +71,17 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
                 {item.label}
               </button>
             ))}
+            <Link
+              href="/blog"
+              className={`px-3 py-2 text-[11px] uppercase tracking-widest2 transition-colors duration-150 ${
+                isBlogActive ? 'text-accent' : 'text-ink-dim hover:text-ink'
+              }`}
+            >
+              <span className="text-ink-muted mr-1.5">
+                {String(navigationData.menuItems.length + 1).padStart(2, '0')}
+              </span>
+              Blog
+            </Link>
           </div>
 
           <div className="flex items-center gap-2">
@@ -134,6 +149,18 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
               {item.label}
             </button>
           ))}
+          <Link
+            href="/blog"
+            onClick={() => setIsMenuOpen(false)}
+            className={`block w-full text-left py-2 text-[12px] uppercase tracking-widest2 transition-colors duration-150 ${
+              isBlogActive ? 'text-accent' : 'text-ink-dim'
+            }`}
+          >
+            <span className="text-ink-muted mr-2">
+              {String(navigationData.menuItems.length + 1).padStart(2, '0')}
+            </span>
+            Blog
+          </Link>
 
           <div
             className="pt-3 mt-2 flex items-center justify-center gap-2"
