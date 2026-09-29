@@ -24,12 +24,41 @@ function assertString(value: unknown, field: string, file: string): string {
   return value;
 }
 
+// Date.parse accepts far more than ISO 8601 ("March 7", "1"), and it
+// silently rolls an out-of-range day or month into the next one instead
+// of rejecting it. Match the ISO 8601 shape first, then check the
+// calendar fields by hand.
+const ISO_8601_PATTERN =
+  /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(?:Z|[+-](\d{2}):(\d{2}))?)?$/;
+
 function assertPublishedAt(value: string, file: string): string {
-  if (Number.isNaN(Date.parse(value))) {
-    throw new Error(
-      `Post frontmatter in ${file} has an invalid publishedAt "${value}". It must be a date string that Date.parse can read, for example "2026-01-01".`,
+  const invalid = () =>
+    new Error(
+      `Post frontmatter in ${file} has an invalid publishedAt "${value}". It must be strict ISO 8601, for example "2026-01-01" or "2026-01-01T09:00:00Z".`,
     );
+
+  const match = ISO_8601_PATTERN.exec(value);
+  if (!match) {
+    throw invalid();
   }
+
+  const [, year, month, day, hour, minute, second, offsetHour, offsetMinute] = match;
+  const monthNum = Number(month);
+  const dayNum = Number(day);
+  if (monthNum < 1 || monthNum > 12) {
+    throw invalid();
+  }
+  const daysInMonth = new Date(Number(year), monthNum, 0).getDate();
+  if (dayNum < 1 || dayNum > daysInMonth) {
+    throw invalid();
+  }
+  if (hour !== undefined && (Number(hour) > 23 || Number(minute) > 59 || Number(second) > 59)) {
+    throw invalid();
+  }
+  if (offsetHour !== undefined && (Number(offsetHour) > 23 || Number(offsetMinute) > 59)) {
+    throw invalid();
+  }
+
   return value;
 }
 

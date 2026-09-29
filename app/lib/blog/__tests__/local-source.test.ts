@@ -293,7 +293,7 @@ describe("LocalContentSource", () => {
     expect(posts[0].heroImage).toBeUndefined();
   });
 
-  it("throws when publishedAt is not a date Date.parse can read", async () => {
+  it("throws when publishedAt is not strict ISO 8601", async () => {
     writePost(path.join(tmpDir, "content", "blog"), "bad-date.md", {
       title: "Bad date",
       excerpt: "e",
@@ -305,6 +305,76 @@ describe("LocalContentSource", () => {
 
     const source = new LocalContentSource();
     await expect(source.listPosts("hannasage.love")).rejects.toThrow(/publishedAt/);
+  });
+
+  it('rejects a non-ISO date phrase like "March 7"', async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "march-seven.md", {
+      title: "March seven",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "March 7",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/publishedAt/);
+  });
+
+  it('rejects a bare number like "1"', async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "bare-number.md", {
+      title: "Bare number",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "1",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/publishedAt/);
+  });
+
+  it("rejects a calendar-invalid ISO date such as 2026-02-30", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "invalid-calendar-date.md", {
+      title: "Invalid calendar date",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "2026-02-30",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/publishedAt/);
+  });
+
+  it("rejects an out-of-range timezone offset such as +99:99", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "bad-offset.md", {
+      title: "Bad offset",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "2026-01-01T09:00:00+99:99",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/publishedAt/);
+  });
+
+  it("accepts a strict ISO 8601 date with a time and a zone", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "with-time.md", {
+      title: "With time",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "2026-01-01T09:30:00Z",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const posts = await new LocalContentSource().listPosts("hannasage.love");
+    expect(posts[0].publishedAt).toBe("2026-01-01T09:30:00Z");
   });
 
   it("throws when the slug contains characters outside [a-z0-9-]", async () => {
