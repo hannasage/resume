@@ -133,7 +133,17 @@ function assertHeroImageUrl(value: string, file: string): string {
 }
 
 function parsePost(fileName: string, raw: string): Post {
-  const { data, content } = matter(raw);
+  // gray-matter parses a `---js` or `---javascript` fence with its
+  // built-in JavaScript engine. Replace that engine so front matter is
+  // only ever data: YAML or JSON.
+  const refuseJs = () => {
+    throw new Error(
+      `Post frontmatter in ${fileName} uses a JavaScript fence. Only YAML or JSON frontmatter is allowed.`,
+    );
+  };
+  const { data, content } = matter(raw, {
+    engines: { javascript: refuseJs, js: refuseJs },
+  });
   const rawSlug = typeof data.slug === "string" && data.slug.length > 0
     ? data.slug
     : fileName.replace(/\.md$/, "");

@@ -118,6 +118,45 @@ describe("LocalContentSource", () => {
     expect(await source.getPost("site-a", "does-not-exist")).toBeNull();
   });
 
+  it.each(["js", "javascript", "JS", "JavaScript"])(
+    "refuses a ---%s front-matter fence and never runs it",
+    async (fence) => {
+      const marker = "__blogFenceRan";
+      delete (globalThis as Record<string, unknown>)[marker];
+      fs.writeFileSync(
+        path.join(tmpDir, "content", "blog", "fenced.md"),
+        [
+          `---${fence}`,
+          `(globalThis.${marker} = true, { title: "t", excerpt: "e", publishedAt: "2026-01-01", sites: ["site-a"], canonicalSite: "hannasage.love" })`,
+          "---",
+          "Body",
+        ].join("\n"),
+        "utf8",
+      );
+
+      await expect(new LocalContentSource().listPosts("site-a")).rejects.toThrow(
+        /JavaScript fence/,
+      );
+      expect((globalThis as Record<string, unknown>)[marker]).toBeUndefined();
+    },
+  );
+
+  it("still parses JSON front matter", async () => {
+    fs.writeFileSync(
+      path.join(tmpDir, "content", "blog", "json-post.md"),
+      [
+        "---json",
+        '{"title": "Json", "excerpt": "e", "publishedAt": "2026-01-01", "sites": ["site-a"], "canonicalSite": "hannasage.love"}',
+        "---",
+        "Body",
+      ].join("\n"),
+      "utf8",
+    );
+
+    const posts = await new LocalContentSource().listPosts("site-a");
+    expect(posts.map((p) => p.slug)).toEqual(["json-post"]);
+  });
+
   it("returns an empty list when the content directory does not exist", async () => {
     fs.rmSync(path.join(tmpDir, "content"), { recursive: true, force: true });
     const source = new LocalContentSource();
