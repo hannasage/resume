@@ -1,0 +1,13 @@
+# Resume site
+
+A personal portfolio and blog site built with Next.js.
+
+## Pages
+
+- [Home](/): About, skills, experience, and side projects.
+- [Blog](/blog): Articles and posts.
+
+## Notes
+
+Blog posts are served from a shared content backend and filtered by
+site permission; only posts permitted for this site appear here.
