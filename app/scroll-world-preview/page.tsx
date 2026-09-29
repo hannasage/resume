@@ -1,0 +1,13 @@
+import type { Metadata } from "next";
+import ScrollWorld from "@/app/components/scroll-world/ScrollWorld";
+
+// Internal preview route for the in-progress scroll-driven home hero
+// scaffold. Not linked from site navigation and excluded from indexing.
+export const metadata: Metadata = {
+  title: "Scroll World Preview",
+  robots: { index: false, follow: false },
+};
+
+export default function ScrollWorldPreviewPage() {
+  return <ScrollWorld />;
+}
