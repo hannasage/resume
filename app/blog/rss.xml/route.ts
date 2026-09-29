@@ -1,20 +1,7 @@
 import { NextResponse } from "next/server";
 import { getContentSource, getCurrentSiteId } from "@/app/lib/blog";
 import { SITE_URL } from "@/app/lib/site";
-
-// XML 1.0 forbids these control characters outright; no amount of
-// escaping makes them legal, so strip them before escaping the rest.
-const XML_ILLEGAL_CHARS = /[\x00-\x08\x0B\x0C\x0E-\x1F]/g;
-
-function escapeXml(value: string): string {
-  return value
-    .replace(XML_ILLEGAL_CHARS, "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
+import { escapeXml } from "./escape-xml";
 
 export async function GET() {
   const siteId = getCurrentSiteId();

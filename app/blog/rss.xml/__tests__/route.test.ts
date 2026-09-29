@@ -3,6 +3,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import { GET } from "../route";
+import { escapeXml } from "../escape-xml";
 
 function writePost(dir: string, fileName: string, frontmatter: Record<string, unknown>, body = "Body text.") {
   const lines = ["---"];
@@ -82,6 +83,13 @@ describe("GET /blog/rss.xml", () => {
 
     expect(xml).toContain("Badchar");
     expect(/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(xml)).toBe(false);
+  });
+
+  it("strips U+FFFE, U+FFFF, and lone surrogates while keeping valid surrogate pairs", () => {
+    const emoji = "😀";
+    const value = `A￾B￿C\uD800D\uDC00${emoji}E`;
+
+    expect(escapeXml(value)).toBe(`ABCD${emoji}E`);
   });
 
   it("lists permitted posts newest first", async () => {
