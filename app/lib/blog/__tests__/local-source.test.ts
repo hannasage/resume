@@ -45,7 +45,7 @@ describe("LocalContentSource", () => {
       heroImage: { url: "/hero.png", alt: "Hero" },
       publishedAt: "2026-01-01",
       sites: ["site-a"],
-      canonicalSite: "site-a",
+      canonicalSite: "hannasage.love",
     });
 
     const source = new LocalContentSource();
@@ -65,7 +65,7 @@ describe("LocalContentSource", () => {
       heroImage: { url: "/hero.png", alt: "Hero" },
       publishedAt: "2026-01-02",
       sites: ["site-a", "site-b"],
-      canonicalSite: "site-b",
+      canonicalSite: "example-brand.example",
     });
 
     const source = new LocalContentSource();
@@ -83,7 +83,7 @@ describe("LocalContentSource", () => {
       heroImage: { url: "/a.png", alt: "a" },
       publishedAt: "2026-01-01",
       sites: ["site-a"],
-      canonicalSite: "site-a",
+      canonicalSite: "hannasage.love",
     });
     writePost(dir, "newer.md", {
       title: "Newer",
@@ -91,7 +91,7 @@ describe("LocalContentSource", () => {
       heroImage: { url: "/a.png", alt: "a" },
       publishedAt: "2026-02-01",
       sites: ["site-a"],
-      canonicalSite: "site-a",
+      canonicalSite: "hannasage.love",
     });
 
     const posts = await new LocalContentSource().listPosts("site-a");
@@ -105,7 +105,7 @@ describe("LocalContentSource", () => {
       heroImage: { url: "/a.png", alt: "a" },
       publishedAt: "2026-01-01",
       sites: ["site-a"],
-      canonicalSite: "site-a",
+      canonicalSite: "hannasage.love",
     });
 
     const source = new LocalContentSource();
@@ -143,10 +143,67 @@ describe("LocalContentSource", () => {
       heroImage: { url: "/a.png", alt: "a" },
       publishedAt: "2026-01-01",
       sites: ["site-a"],
-      canonicalSite: "site-a",
+      canonicalSite: "hannasage.love",
     });
 
     const post = await new LocalContentSource().getPost("site-a", "my-post");
     expect(post?.slug).toBe("my-post");
+  });
+
+  it("throws when canonicalSite is not a known site", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "bad-canonical.md", {
+      title: "Bad canonical",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "not-a-real-site.example",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/canonicalSite/);
+  });
+
+  it("throws when heroImage.url is neither https nor a site-relative path", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "bad-image.md", {
+      title: "Bad image",
+      excerpt: "e",
+      heroImage: { url: "ftp://example.com/a.png", alt: "a" },
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/heroImage\.url/);
+  });
+
+  it("throws when a protocol-relative heroImage.url points off-site", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "protocol-relative.md", {
+      title: "Protocol relative",
+      excerpt: "e",
+      heroImage: { url: "//evil.example/a.png", alt: "a" },
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/heroImage\.url/);
+  });
+
+  it("throws when the slug contains characters outside [a-z0-9-]", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "bad-slug.md", {
+      title: "Bad slug",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+      slug: "Bad Slug!",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/slug/);
   });
 });

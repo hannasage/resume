@@ -2,6 +2,9 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import type { ContentSource, Post } from "./types";
+import { KNOWN_SITES } from "./types";
+
+const SLUG_PATTERN = /^[a-z0-9-]+$/;
 
 function contentDir(): string {
   return path.join(process.cwd(), "content", "blog");
@@ -14,11 +17,41 @@ function assertString(value: unknown, field: string, file: string): string {
   return value;
 }
 
+function assertSlug(value: string, file: string): string {
+  if (!SLUG_PATTERN.test(value)) {
+    throw new Error(
+      `Post frontmatter in ${file} has an invalid slug "${value}". A slug may contain only lowercase letters, digits, and hyphens.`,
+    );
+  }
+  return value;
+}
+
+function assertKnownSite(value: string, field: string, file: string): string {
+  if (!(KNOWN_SITES as readonly string[]).includes(value)) {
+    throw new Error(
+      `Post frontmatter in ${file} has an unknown ${field} "${value}". Known sites are: ${KNOWN_SITES.join(", ")}.`,
+    );
+  }
+  return value;
+}
+
+function assertHeroImageUrl(value: string, file: string): string {
+  const isHttps = value.startsWith("https://");
+  const isSiteRelative = value.startsWith("/") && !value.startsWith("//");
+  if (!isHttps && !isSiteRelative) {
+    throw new Error(
+      `Post frontmatter in ${file} has an invalid heroImage.url "${value}". It must be an https:// URL or a path under /public.`,
+    );
+  }
+  return value;
+}
+
 function parsePost(fileName: string, raw: string): Post {
   const { data, content } = matter(raw);
-  const slug = typeof data.slug === "string" && data.slug.length > 0
+  const rawSlug = typeof data.slug === "string" && data.slug.length > 0
     ? data.slug
     : fileName.replace(/\.md$/, "");
+  const slug = assertSlug(rawSlug, fileName);
 
   const heroImage = data.heroImage ?? {};
   const sites = Array.isArray(data.sites) ? data.sites.filter((s): s is string => typeof s === "string") : [];
@@ -29,12 +62,12 @@ function parsePost(fileName: string, raw: string): Post {
     excerpt: assertString(data.excerpt, "excerpt", fileName),
     body: content.trim(),
     heroImage: {
-      url: assertString(heroImage.url, "heroImage.url", fileName),
+      url: assertHeroImageUrl(assertString(heroImage.url, "heroImage.url", fileName), fileName),
       alt: assertString(heroImage.alt, "heroImage.alt", fileName),
     },
     publishedAt: assertString(data.publishedAt, "publishedAt", fileName),
     sites,
-    canonicalSite: assertString(data.canonicalSite, "canonicalSite", fileName),
+    canonicalSite: assertKnownSite(assertString(data.canonicalSite, "canonicalSite", fileName), "canonicalSite", fileName),
   };
 }
 

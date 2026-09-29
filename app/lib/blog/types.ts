@@ -24,6 +24,14 @@ export interface HeroImage {
   alt: string;
 }
 
+/**
+ * Site identifiers a post's `sites` and `canonicalSite` fields may name.
+ * A post whose `canonicalSite` is not one of these fails to parse: this
+ * blocks a post's frontmatter from steering the canonical URL or an Open
+ * Graph image at an arbitrary host.
+ */
+export const KNOWN_SITES = ["hannasage.love", "example-brand.example"] as const;
+
 export interface Post {
   slug: string;
   title: string;

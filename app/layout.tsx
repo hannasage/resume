@@ -4,6 +4,7 @@ import "./globals.css";
 import "@hannasage/projection-ui/tokens";
 import { ThemeProvider } from "./context/ThemeContext";
 import { getMetadataInfo } from "./lib/content-loader";
+import { SITE_URL } from "./lib/site";
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -26,7 +27,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hannasage.love"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: metadataInfo.title,
     template: "%s · Hanna Sage",

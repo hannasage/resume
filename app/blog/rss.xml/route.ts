@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { getContentSource, getCurrentSiteId } from "@/app/lib/blog";
-
-const BASE_URL = "https://hannasage.love";
+import { SITE_URL } from "@/app/lib/site";
 
 function escapeXml(value: string): string {
   return value
@@ -18,7 +17,7 @@ export async function GET() {
 
   const items = posts
     .map((post) => {
-      const url = `${BASE_URL}/blog/${post.slug}`;
+      const url = `${SITE_URL}/blog/${post.slug}`;
       return `
     <item>
       <title>${escapeXml(post.title)}</title>
@@ -34,7 +33,7 @@ export async function GET() {
 <rss version="2.0">
   <channel>
     <title>Hanna Sage</title>
-    <link>${BASE_URL}</link>
+    <link>${SITE_URL}</link>
     <description>Posts from Hanna Sage.</description>${items}
   </channel>
 </rss>`;
