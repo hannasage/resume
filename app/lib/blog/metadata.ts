@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { Post } from "./types";
+import { getMetadataInfo } from "../content-loader";
 
 /** The site's own default share image, used when a post has no hero image. */
 const DEFAULT_IMAGE = "/opengraph-image";
@@ -27,6 +28,8 @@ export function buildPostMetadata(post: Post): Metadata {
       description: post.excerpt,
       url: canonicalUrl,
       type: "article",
+      siteName: "Hanna Sage",
+      locale: getMetadataInfo().openGraph.locale,
       images: [{ url: imageUrl, alt: imageAlt }],
     },
     twitter: {

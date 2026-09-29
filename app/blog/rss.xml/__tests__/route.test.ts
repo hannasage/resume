@@ -47,8 +47,41 @@ describe("GET /blog/rss.xml", () => {
     const xml = await response.text();
 
     expect(response.headers.get("Content-Type")).toContain("application/rss+xml");
-    expect(xml).toContain('<rss version="2.0">');
+    expect(xml).toContain('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">');
     expect(xml).not.toContain("<item>");
+  });
+
+  it("declares a self-referencing atom:link pointing at the feed's own URL", async () => {
+    const response = await GET();
+    const xml = await response.text();
+
+    expect(xml).toContain(
+      '<atom:link href="https://hannasage.love/blog/rss.xml" rel="self" type="application/rss+xml" />',
+    );
+  });
+
+  it("strips XML-illegal control characters from escaped post text", async () => {
+    const raw = [
+      "---",
+      'title: "Bad\\x0Bchar"',
+      'excerpt: "e"',
+      "heroImage:",
+      '  url: "/a.png"',
+      '  alt: "a"',
+      'publishedAt: "2026-01-01"',
+      "sites:",
+      "  - hannasage.love",
+      'canonicalSite: "hannasage.love"',
+      "---",
+      "Body.",
+    ].join("\n");
+    fs.writeFileSync(path.join(tmpDir, "content", "blog", "control-char.md"), raw, "utf8");
+
+    const response = await GET();
+    const xml = await response.text();
+
+    expect(xml).toContain("Badchar");
+    expect(/[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(xml)).toBe(false);
   });
 
   it("lists permitted posts newest first", async () => {

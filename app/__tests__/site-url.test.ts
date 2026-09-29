@@ -17,6 +17,15 @@ function originsIn(text: string): string[] {
   return [...new Set(matches)];
 }
 
+// The Atom XML namespace URI (RSS's atom:link self-reference requires
+// declaring it) is a fixed identifier from the Atom spec, not a domain
+// this deployment serves content from, so it is not a SITE_URL mismatch.
+const ATOM_NAMESPACE_ORIGIN = "http://www.w3.org";
+
+function nonSiteOriginsIn(text: string): string[] {
+  return originsIn(text).filter((origin) => origin !== ATOM_NAMESPACE_ORIGIN);
+}
+
 describe("SITE_URL is the single source of the site's origin", () => {
   it("layout.tsx builds metadataBase from SITE_URL, not a literal", () => {
     expect(LAYOUT_SOURCE).toContain("new URL(SITE_URL)");
@@ -46,7 +55,7 @@ describe("SITE_URL is the single source of the site's origin", () => {
     const xml = await response.text();
 
     expect(xml).toContain(SITE_URL);
-    expect(originsIn(xml)).toEqual([SITE_URL]);
+    expect(nonSiteOriginsIn(xml)).toEqual([SITE_URL]);
   });
 });
 
@@ -90,6 +99,6 @@ describe("RSS feed with a mocked content directory", () => {
     const response = await rssGet();
     const xml = await response.text();
 
-    expect(originsIn(xml)).toEqual([SITE_URL]);
+    expect(nonSiteOriginsIn(xml)).toEqual([SITE_URL]);
   });
 });

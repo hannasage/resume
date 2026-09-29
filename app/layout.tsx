@@ -35,6 +35,11 @@ export const metadata: Metadata = {
   description: metadataInfo.description,
   keywords: metadataInfo.keywords,
   authors: [{ name: metadataInfo.author }],
+  alternates: {
+    types: {
+      "application/rss+xml": "/blog/rss.xml",
+    },
+  },
   openGraph: {
     title: metadataInfo.openGraph.title,
     description: metadataInfo.openGraph.description,
