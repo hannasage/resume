@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# The workflow reads the repository and writes nothing.
+permissions:
+  contents: read
+
+# A second push to a pull request cancels the first run. A run on main is
+# never cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      # Without this, the checkout writes the job token into .git/config,
+      # where a later step's third-party code can read it: `npm ci` runs
+      # install scripts and `npm run build` runs dependency code. No step
+      # here uses git after the checkout.
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install from the lockfile
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      # BLOG_CONTENT_SOURCE defaults to "local" (.env.example), so the
+      # build needs no Sanity credentials.
+      - name: Build
+        run: npm run build
