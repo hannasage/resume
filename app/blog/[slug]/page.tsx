@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getContentSource, getCurrentSiteId } from "@/app/lib/blog";
+import { buildPostMetadata } from "@/app/lib/blog/metadata";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -12,7 +13,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) {
     return { title: "Not found" };
   }
-  return { title: post.title, description: post.excerpt };
+  return buildPostMetadata(post);
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
