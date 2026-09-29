@@ -8,11 +8,11 @@ import ThemeSelector from './ThemeSelector';
 import { getNavigationData } from '../lib/content-loader';
 
 interface NavigationProps {
-  activeSection: string;
-  scrollToSection: (section: string) => void;
+  activeSection?: string;
+  scrollToSection?: (section: string) => void;
 }
 
-export default function Navigation({ activeSection, scrollToSection }: NavigationProps) {
+export default function Navigation({ activeSection = '', scrollToSection }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const pathname = usePathname();
@@ -27,7 +27,7 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
   }, []);
 
   const handleMenuClick = (section: string) => {
-    scrollToSection(section);
+    scrollToSection?.(section);
     setIsMenuOpen(false);
   };
 
@@ -55,24 +55,37 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
           </div>
 
           <div className="hidden md:flex items-center gap-1">
-            {navigationData.menuItems.map((item, i) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`px-3 py-2 text-[11px] uppercase tracking-widest2 transition-colors duration-150 ${
-                  activeSection === item.id
-                    ? 'text-accent'
-                    : 'text-ink-dim hover:text-ink'
-                }`}
-              >
+            {navigationData.menuItems.map((item, i) => {
+              const itemClassName = `px-3 py-2 text-[11px] uppercase tracking-widest2 transition-colors duration-150 ${
+                activeSection === item.id
+                  ? 'text-accent'
+                  : 'text-ink-dim hover:text-ink'
+              }`;
+              const itemNumber = (
                 <span className="text-ink-muted mr-1.5">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                {item.label}
-              </button>
-            ))}
+              );
+
+              return scrollToSection ? (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={itemClassName}
+                >
+                  {itemNumber}
+                  {item.label}
+                </button>
+              ) : (
+                <Link key={item.id} href={`/#${item.id}`} className={itemClassName}>
+                  {itemNumber}
+                  {item.label}
+                </Link>
+              );
+            })}
             <Link
               href="/blog"
+              aria-current={isBlogActive ? 'page' : undefined}
               className={`px-3 py-2 text-[11px] uppercase tracking-widest2 transition-colors duration-150 ${
                 isBlogActive ? 'text-accent' : 'text-ink-dim hover:text-ink'
               }`}
@@ -127,6 +140,7 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
         className={`md:hidden overflow-hidden transition-all duration-200 ${
           isMenuOpen ? 'max-h-[320px]' : 'max-h-0'
         }`}
+        inert={isMenuOpen ? undefined : true}
         style={{
           backgroundColor: 'var(--color-bg)',
           borderTop: isMenuOpen
@@ -135,23 +149,37 @@ export default function Navigation({ activeSection, scrollToSection }: Navigatio
         }}
       >
         <div className="px-4 py-3 space-y-1">
-          {navigationData.menuItems.map((item, i) => (
-            <button
-              key={item.id}
-              onClick={() => handleMenuClick(item.id)}
-              className={`block w-full text-left py-2 text-[12px] uppercase tracking-widest2 transition-colors duration-150 ${
-                activeSection === item.id ? 'text-accent' : 'text-ink-dim'
-              }`}
-            >
+          {navigationData.menuItems.map((item, i) => {
+            const itemClassName = `block w-full text-left py-2 text-[12px] uppercase tracking-widest2 transition-colors duration-150 ${
+              activeSection === item.id ? 'text-accent' : 'text-ink-dim'
+            }`;
+            const itemNumber = (
               <span className="text-ink-muted mr-2">
                 {String(i + 1).padStart(2, '0')}
               </span>
-              {item.label}
-            </button>
-          ))}
+            );
+
+            return scrollToSection ? (
+              <button key={item.id} onClick={() => handleMenuClick(item.id)} className={itemClassName}>
+                {itemNumber}
+                {item.label}
+              </button>
+            ) : (
+              <Link
+                key={item.id}
+                href={`/#${item.id}`}
+                onClick={() => setIsMenuOpen(false)}
+                className={itemClassName}
+              >
+                {itemNumber}
+                {item.label}
+              </Link>
+            );
+          })}
           <Link
             href="/blog"
             onClick={() => setIsMenuOpen(false)}
+            aria-current={isBlogActive ? 'page' : undefined}
             className={`block w-full text-left py-2 text-[12px] uppercase tracking-widest2 transition-colors duration-150 ${
               isBlogActive ? 'text-accent' : 'text-ink-dim'
             }`}
