@@ -1,3 +1,5 @@
+import { SITE_URL } from "../site";
+
 /**
  * Shared post shape for the multi-site blog backend.
  *
@@ -24,12 +26,31 @@ export interface HeroImage {
   alt: string;
 }
 
+/**
+ * Site identifiers a post's `sites` and `canonicalSite` fields may name.
+ * A post whose `canonicalSite` is not one of these fails to parse: this
+ * blocks a post's frontmatter from steering the canonical URL or an Open
+ * Graph image at an arbitrary host.
+ *
+ * `example-brand.example` exists only under Vitest's default
+ * `NODE_ENV=test`, to exercise the multi-site behavior in fixtures. It
+ * is never reachable under `next build` or `next start`
+ * (`NODE_ENV=production`).
+ */
+const PRODUCTION_KNOWN_SITES: readonly string[] = [new URL(SITE_URL).host];
+const TEST_ONLY_KNOWN_SITES = ["example-brand.example"] as const;
+
+export const KNOWN_SITES: readonly string[] =
+  process.env.NODE_ENV === "test"
+    ? [...PRODUCTION_KNOWN_SITES, ...TEST_ONLY_KNOWN_SITES]
+    : PRODUCTION_KNOWN_SITES;
+
 export interface Post {
   slug: string;
   title: string;
   excerpt: string;
   body: string;
-  heroImage: HeroImage;
+  heroImage?: HeroImage;
   publishedAt: string;
   /** Site identifiers permitted to show this post. */
   sites: string[];
