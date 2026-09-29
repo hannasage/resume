@@ -23,6 +23,17 @@ describe("ScrollWorldPreviewPage", () => {
   it("returns notFound in production without the flag", () => {
     vi.stubEnv("NODE_ENV", "production");
     vi.stubEnv("SCROLL_WORLD_PREVIEW", "");
-    expect(() => render(<ScrollWorldPreviewPage />)).toThrow();
+
+    let caught: unknown;
+    try {
+      render(<ScrollWorldPreviewPage />);
+    } catch (error) {
+      caught = error;
+    }
+
+    // next/navigation's notFound() throws an Error whose `digest` marks
+    // it as Next's own 404 fallback, not an arbitrary render failure.
+    expect(caught).toBeInstanceOf(Error);
+    expect((caught as { digest?: string }).digest).toBe("NEXT_HTTP_ERROR_FALLBACK;404");
   });
 });
