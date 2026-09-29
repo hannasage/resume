@@ -8,6 +8,11 @@ import { SITE_URL } from "../site";
 const SLUG_PATTERN = /^[a-z0-9-]+$/;
 const SITE_ORIGIN = new URL(SITE_URL).origin;
 
+// A list, not a single string: this deployment's own host is the only
+// entry today, but a future trusted image host (for example a CDN) can
+// join it without loosening the check to "any https host".
+const ALLOWED_IMAGE_HOSTS: readonly string[] = [new URL(SITE_URL).host];
+
 function contentDir(): string {
   return path.join(process.cwd(), "content", "blog");
 }
@@ -15,6 +20,15 @@ function contentDir(): string {
 function assertString(value: unknown, field: string, file: string): string {
   if (typeof value !== "string" || value.length === 0) {
     throw new Error(`Post frontmatter in ${file} is missing required field "${field}"`);
+  }
+  return value;
+}
+
+function assertPublishedAt(value: string, file: string): string {
+  if (Number.isNaN(Date.parse(value))) {
+    throw new Error(
+      `Post frontmatter in ${file} has an invalid publishedAt "${value}". It must be a date string that Date.parse can read, for example "2026-01-01".`,
+    );
   }
   return value;
 }
@@ -49,13 +63,28 @@ function assertHeroImageUrl(value: string, file: string): string {
     );
   }
 
+  // The WHATWG URL parser accepts "https:host" (no //) as a valid
+  // absolute URL, either normalizing it to "https://host/" on its own,
+  // or - when given SITE_URL as a base whose scheme also happens to be
+  // "https:" - silently folding it into a same-origin relative path.
+  // Reject any value with a scheme prefix that is not the literal
+  // "https://" before either parse is attempted.
+  const hasSchemePrefix = /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(value);
+  const isAbsolute = value.startsWith("https://");
+  if (hasSchemePrefix && !isAbsolute) {
+    throw new Error(
+      `Post frontmatter in ${file} has an invalid heroImage.url "${value}". An absolute URL must start with "https://".`,
+    );
+  }
+
   let resolved: URL;
-  let isAbsolute: boolean;
-  try {
-    resolved = new URL(value);
-    isAbsolute = true;
-  } catch {
-    isAbsolute = false;
+  if (isAbsolute) {
+    try {
+      resolved = new URL(value);
+    } catch {
+      throw new Error(`Post frontmatter in ${file} has an invalid heroImage.url "${value}".`);
+    }
+  } else {
     try {
       resolved = new URL(value, SITE_URL);
     } catch {
@@ -63,10 +92,12 @@ function assertHeroImageUrl(value: string, file: string): string {
     }
   }
 
-  const valid = isAbsolute ? resolved.protocol === "https:" : resolved.origin === SITE_ORIGIN;
+  const valid = isAbsolute
+    ? ALLOWED_IMAGE_HOSTS.includes(resolved.host)
+    : resolved.origin === SITE_ORIGIN;
   if (!valid) {
     throw new Error(
-      `Post frontmatter in ${file} has an invalid heroImage.url "${value}". It must be an https:// URL or a path under /public.`,
+      `Post frontmatter in ${file} has an invalid heroImage.url "${value}". It must be an https:// URL on an allowed host or a path under /public.`,
     );
   }
   return value;
@@ -79,19 +110,21 @@ function parsePost(fileName: string, raw: string): Post {
     : fileName.replace(/\.md$/, "");
   const slug = assertSlug(rawSlug, fileName);
 
-  const heroImage = data.heroImage ?? {};
   const sites = Array.isArray(data.sites) ? data.sites.filter((s): s is string => typeof s === "string") : [];
+  const heroImage = data.heroImage
+    ? {
+        url: assertHeroImageUrl(assertString(data.heroImage.url, "heroImage.url", fileName), fileName),
+        alt: assertString(data.heroImage.alt, "heroImage.alt", fileName),
+      }
+    : undefined;
 
   return {
     slug,
     title: assertString(data.title, "title", fileName),
     excerpt: assertString(data.excerpt, "excerpt", fileName),
     body: content.trim(),
-    heroImage: {
-      url: assertHeroImageUrl(assertString(heroImage.url, "heroImage.url", fileName), fileName),
-      alt: assertString(heroImage.alt, "heroImage.alt", fileName),
-    },
-    publishedAt: assertString(data.publishedAt, "publishedAt", fileName),
+    heroImage,
+    publishedAt: assertPublishedAt(assertString(data.publishedAt, "publishedAt", fileName), fileName),
     sites,
     canonicalSite: assertKnownSite(assertString(data.canonicalSite, "canonicalSite", fileName), "canonicalSite", fileName),
   };

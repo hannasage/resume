@@ -236,7 +236,7 @@ describe("LocalContentSource", () => {
     await expect(source.listPosts("hannasage.love")).rejects.toThrow(/backslash/i);
   });
 
-  it("allows an absolute https URL written without // (https:host)", async () => {
+  it("rejects an absolute https URL written without // (https:host)", async () => {
     writePost(path.join(tmpDir, "content", "blog"), "scheme-only.md", {
       title: "Scheme only",
       excerpt: "e",
@@ -247,8 +247,64 @@ describe("LocalContentSource", () => {
     });
 
     const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/heroImage\.url/);
+  });
+
+  it("allows an absolute https URL on this deployment's own host", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "own-host.md", {
+      title: "Own host",
+      excerpt: "e",
+      heroImage: { url: "https://hannasage.love/hero.png", alt: "a" },
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
     const posts = await source.listPosts("hannasage.love");
-    expect(posts[0].heroImage.url).toBe("https:host");
+    expect(posts[0].heroImage?.url).toBe("https://hannasage.love/hero.png");
+  });
+
+  it("rejects an absolute https URL on a host outside the allowed list", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "off-allowlist.md", {
+      title: "Off allowlist",
+      excerpt: "e",
+      heroImage: { url: "https://evil.example/hero.png", alt: "a" },
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/heroImage\.url/);
+  });
+
+  it("parses a post with no heroImage frontmatter field, leaving heroImage undefined", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "no-hero.md", {
+      title: "No hero image",
+      excerpt: "e",
+      publishedAt: "2026-01-01",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const posts = await new LocalContentSource().listPosts("hannasage.love");
+    expect(posts).toHaveLength(1);
+    expect(posts[0].heroImage).toBeUndefined();
+  });
+
+  it("throws when publishedAt is not a date Date.parse can read", async () => {
+    writePost(path.join(tmpDir, "content", "blog"), "bad-date.md", {
+      title: "Bad date",
+      excerpt: "e",
+      heroImage: { url: "/a.png", alt: "a" },
+      publishedAt: "not-a-date",
+      sites: ["hannasage.love"],
+      canonicalSite: "hannasage.love",
+    });
+
+    const source = new LocalContentSource();
+    await expect(source.listPosts("hannasage.love")).rejects.toThrow(/publishedAt/);
   });
 
   it("throws when the slug contains characters outside [a-z0-9-]", async () => {

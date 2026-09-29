@@ -30,8 +30,10 @@ export default async function BlogPostPage({ params }: PageProps) {
       <article>
         <h1 className="font-display text-3xl font-bold text-ink mb-2">{post.title}</h1>
         <p className="text-sm text-ink-dim mb-8">{post.publishedAt}</p>
-        {/* eslint-disable-next-line @next/next/no-img-element -- local placeholder assets, no image optimization needed */}
-        <img src={post.heroImage.url} alt={post.heroImage.alt} className="w-full mb-8" />
+        {post.heroImage && (
+          // eslint-disable-next-line @next/next/no-img-element -- local placeholder assets, no image optimization needed
+          <img src={post.heroImage.url} alt={post.heroImage.alt} className="w-full mb-8" />
+        )}
         <div className="text-ink whitespace-pre-wrap">{post.body}</div>
       </article>
     </main>

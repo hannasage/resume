@@ -1,3 +1,5 @@
+import { SITE_URL } from "../site";
+
 /**
  * Shared post shape for the multi-site blog backend.
  *
@@ -35,7 +37,7 @@ export interface HeroImage {
  * is never reachable under `next build` or `next start`
  * (`NODE_ENV=production`).
  */
-const PRODUCTION_KNOWN_SITES = ["hannasage.love"] as const;
+const PRODUCTION_KNOWN_SITES: readonly string[] = [new URL(SITE_URL).host];
 const TEST_ONLY_KNOWN_SITES = ["example-brand.example"] as const;
 
 export const KNOWN_SITES: readonly string[] =
@@ -48,7 +50,7 @@ export interface Post {
   title: string;
   excerpt: string;
   body: string;
-  heroImage: HeroImage;
+  heroImage?: HeroImage;
   publishedAt: string;
   /** Site identifiers permitted to show this post. */
   sites: string[];

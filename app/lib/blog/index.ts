@@ -1,6 +1,7 @@
 import type { ContentSource } from "./types";
 import { LocalContentSource } from "./local-source";
 import { SanityContentSource } from "./sanity-source";
+import { SITE_URL } from "../site";
 
 export type { ContentSource, Post, HeroImage } from "./types";
 
@@ -28,5 +29,5 @@ export function getContentSource(): ContentSource {
 
 /** The site identifier for this deployment, used to filter posts by permission. */
 export function getCurrentSiteId(): string {
-  return process.env.NEXT_PUBLIC_SITE_ID ?? "hannasage.love";
+  return process.env.NEXT_PUBLIC_SITE_ID ?? new URL(SITE_URL).host;
 }
