@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import ScrollWorld from "@/app/components/scroll-world/ScrollWorld";
 
 // Internal preview route for the in-progress scroll-driven home hero
@@ -9,5 +10,8 @@ export const metadata: Metadata = {
 };
 
 export default function ScrollWorldPreviewPage() {
+  if (process.env.NODE_ENV === "production" && process.env.SCROLL_WORLD_PREVIEW !== "1") {
+    notFound();
+  }
   return <ScrollWorld />;
 }
