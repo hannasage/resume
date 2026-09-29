@@ -16,9 +16,9 @@ import BlogIndexPage from "../page";
 // integration with the App Router), but it does exercise every bit of
 // this project's own logic: data loading, filtering, and markup.
 //
-// The site launches with no posts in content/blog (decision 2 = C), so
-// tests that need posts seed them into a mocked cwd from fixtures
-// instead of relying on production content.
+// The site launches with no posts in content/blog, so tests that need
+// posts seed them into a mocked cwd from fixtures instead of relying
+// on production content.
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 function seedFixtures(tmpDir: string) {
