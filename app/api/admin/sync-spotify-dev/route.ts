@@ -14,10 +14,16 @@ function isLocalHost(request: NextRequest): boolean {
 
 /**
  * Dev-only: refresh top tracks from Spotify and rewrite data/spotify-tracks.json.
+ * A production build answers 404, so the track list is only ever written
+ * locally, through `npm run update-tracks`.
  * Only accepts requests with Host localhost / 127.0.0.1 (same-origin from local dev).
  * Requires SPOTIFY_REFRESH_TOKEN (+ client id/secret) in .env.local.
  */
 export async function POST(request: NextRequest) {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+
   if (!isLocalHost(request)) {
     return NextResponse.json({ error: 'Only available on localhost' }, { status: 403 });
   }
