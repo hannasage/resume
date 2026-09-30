@@ -12,12 +12,19 @@ const spotifyMocks = vi.hoisted(() => ({
   refreshAccessToken: vi.fn(async () => ({ access_token: 'access', expires_in: 3600 })),
   getUserTopTracks: vi.fn(async () => ({ items: [] })),
   createCacheData: vi.fn(() => ({ tracks: [], lastUpdated: 'now', cacheExpiry: 'later' })),
+  generateAuthUrl: vi.fn(() => 'https://accounts.spotify.com/authorize'),
+  exchangeCodeForTokens: vi.fn(async () => ({
+    access_token: 'access',
+    refresh_token: 'refresh',
+    expires_in: 3600,
+  })),
 }));
 
 vi.mock('fs/promises', () => ({ ...fsMocks, default: fsMocks }));
 vi.mock('../../../lib/spotify', () => ({ spotifyService: spotifyMocks }));
 
 import { POST as syncTracks } from '../sync-spotify-dev/route';
+import { GET as authGet, POST as authPost } from '../spotify-auth/route';
 
 const API_DIR = join(__dirname, '..', '..');
 
@@ -86,5 +93,50 @@ describe('admin track routes', () => {
     expect(response.status).toBe(200);
     expect(fsMocks.writeFile).toHaveBeenCalledTimes(1);
     expect(String(fsMocks.writeFile.mock.calls[0][0])).toMatch(/data[\\/]spotify-tracks\.json$/);
+  });
+});
+
+describe('spotify auth route', () => {
+  const AUTH_URL = 'http://localhost:3000/api/admin/spotify-auth';
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+    vi.clearAllMocks();
+  });
+
+  function spotifyCalls() {
+    return (
+      spotifyMocks.generateAuthUrl.mock.calls.length +
+      spotifyMocks.exchangeCodeForTokens.mock.calls.length +
+      spotifyMocks.refreshAccessToken.mock.calls.length
+    );
+  }
+
+  it('answers 404 in production to every request and never calls Spotify', async () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    const requests = [
+      () => authGet(new NextRequest(`${AUTH_URL}?action=authorize`)),
+      () => authGet(new NextRequest(`${AUTH_URL}?code=x`)),
+      () =>
+        authPost(
+          new NextRequest(AUTH_URL, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ refresh_token: 'any-token' }),
+          }),
+        ),
+    ];
+    for (const send of requests) {
+      const response = await send();
+      expect(response.status).toBe(404);
+    }
+    expect(spotifyCalls()).toBe(0);
+  });
+
+  it('still runs the setup flow in development', async () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    const response = await authGet(new NextRequest(`${AUTH_URL}?code=x`));
+    expect(response.status).toBe(200);
+    expect(spotifyMocks.exchangeCodeForTokens).toHaveBeenCalledTimes(1);
   });
 });

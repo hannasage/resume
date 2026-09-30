@@ -1,7 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { spotifyService } from '../../../lib/spotify';
 
+// Spotify setup runs in local development only. A production build answers
+// 404, so the site's Spotify app credentials never serve a public request.
+function notFoundInProduction(): NextResponse | null {
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  }
+  return null;
+}
+
 export async function GET(request: NextRequest) {
+  const notFound = notFoundInProduction();
+  if (notFound) return notFound;
+
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
   const action = searchParams.get('action');
@@ -43,6 +55,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const notFound = notFoundInProduction();
+  if (notFound) return notFound;
+
   try {
     const { refresh_token } = await request.json();
     
